@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cart_item;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      //  $t = Cart_item::all()->where('cartId', 3)->where('productId', 2);
+        if(Cart_item::all()->where('cartId', 3)->where('productId', 3)->isNotEmpty()){
+            $t='есть';
+        } else {
+            $t='нету';
+        }
+        //dd($t);
+        return view('home', compact('t'));
     }
 }
