@@ -21,14 +21,14 @@ class Order_itemFactory extends Factory
      */
     public function definition()
     {
-        $productId = $this->faker->numberBetween(1, 20);
-        $orderId = $this->faker->unique($reset = true)->numberBetween(1, 15);
+        $product_id = $this->faker->numberBetween(1, 20);
+        $order_id = $this->faker->unique($reset = true)->numberBetween(1, 15);
         $quantity = $this->faker->numberBetween(0, 3);
         $price = $this->faker->randomFloat(null, 5, 20);
 
         return [
-            'productId' => $productId,
-            'orderId' => $orderId,
+            'product_id' => $product_id,
+            'order_id' => $order_id,
             'quantity' => $quantity,
             'price' => $price
         ];

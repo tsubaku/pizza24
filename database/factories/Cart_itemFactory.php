@@ -21,13 +21,13 @@ class Cart_itemFactory extends Factory
      */
     public function definition()
     {
-        $productId = $this->faker->numberBetween(1, 20);
-        $cartId = $this->faker->unique($reset = true)->numberBetween(1, 15);
+        $product_id = $this->faker->numberBetween(1, 20);
+        $cart_id = $this->faker->unique($reset = true)->numberBetween(1, 15);
         $quantity = $this->faker->numberBetween(0, 3);
 
         return [
-            'productId' => $productId,
-            'cartId' => $cartId,
+            'product_id' => $product_id,
+            'cart_id' => $cart_id,
             'quantity' => $quantity
         ];
     }

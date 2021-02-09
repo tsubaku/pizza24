@@ -13,31 +13,40 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        $categoryName = '_Root category_';
+        $data[] = [
+            'title' => $categoryName,
+            'slug' => \Str::slug($categoryName),
+            'parent_id' => 1,
+            'description' => 'Root category',
+            'image_url' => ''
+        ];
+
         $categoryName = 'Pizza';
         $data[] = [
             'title' => $categoryName,
             'slug' => \Str::slug($categoryName),
-            'parentId' => 0,
+            'parent_id' => 1,
             'description' => 'All pizzas in our store',
-            'imageUrl' => ''
+            'image_url' => ''
         ];
 
         $categoryName = 'Pizza sauces';
         $data[] = [
             'title' => $categoryName,
             'slug' => \Str::slug($categoryName),
-            'parentId' => 1,
+            'parent_id' => 2,
             'description' => 'All pizza sauces in our store',
-            'imageUrl' => ''
+            'image_url' => ''
         ];
 
         $categoryName = 'Sushi';
         $data[] = [
             'title' => $categoryName,
             'slug' => \Str::slug($categoryName),
-            'parentId' => 0,
+            'parent_id' => 1,
             'description' => 'All sushi in our store',
-            'imageUrl' => ''
+            'image_url' => ''
         ];
 
         \DB::table('categories')->insert($data);

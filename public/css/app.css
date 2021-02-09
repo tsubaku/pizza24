@@ -10013,3 +10013,11 @@ h3 {
   padding: 2px;
   border-color: #0b5fce;
 }
+
+.td-draft {
+  background-color: #eeffee;
+}
+
+.root-color {
+  color: #aaaaaa;
+}

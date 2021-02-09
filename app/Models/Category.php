@@ -10,6 +10,7 @@ class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,8 +19,21 @@ class Category extends Model
     protected $fillable = [
         'title',
         'slug',
-        'parentId',
+        'parent_id',
         'description',
-        'imageUrl'
+        'image_url'
     ];
+
+    /**
+     * Get parent category
+     *
+     * @return Category
+     */
+    public function parentCategory()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
+
+
 }

@@ -10,14 +10,15 @@ class Order extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'userId',
-        'sessionId',
+        'user_id',
+        'session_id',
         'status',
         'total',
         'name',

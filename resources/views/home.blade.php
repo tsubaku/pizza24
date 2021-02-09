@@ -19,6 +19,5 @@
             </div>
         </div>
     </div>
-   t= {{$t}}
 </div>
 @endsection

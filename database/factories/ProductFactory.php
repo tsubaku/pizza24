@@ -21,22 +21,22 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->unique()->sentence(rand(1, 3), true); //sentence - предложение (3-8 слов)
+        $title = $this->faker->unique()->words(rand(1, 3), true); //sentence - предложение (3-8 слов)
         //$title = $this->faker->asciify('gfshfksjfhaaeee'); //sentence - предложение (3-8 слов)
-        $categoryId = rand(1, 3);
-        $description = $this->faker->realText(rand(1000, 3000)); //realText - текст 1000-3000 символов
-        $isPublished = rand(1, 5) > 1;//1 из 5 неопубликован
+        $category_id = rand(1, 3);
+        $description = $this->faker->realText(rand(300, 500)); //realText - текст 1000-3000 символов
+        $is_published = rand(1, 5) > 1;//1 из 5 неопубликован
         $price = $this->faker->randomFloat(null, 5, 20);
-        $imageUrl = '';
+        $image_url = '';
 
         return [
             'title' => $title,
             'slug' => \Str::slug($title),
-            'categoryId' => $categoryId,
+            'category_id' => $category_id,
             'description' => $description,
             'price' => $price,
-            'imageUrl' => $imageUrl,
-            'isPublished' => $isPublished
+            'image_url' => $image_url,
+            'is_published' => $is_published
         ];
     }
 }

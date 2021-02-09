@@ -21,16 +21,16 @@ class CartFactory extends Factory
      */
     public function definition()
     {
-        $userId = $this->faker->unique()->numberBetween(3, 18);
-        $sessionId =  \Str::random(26);
+        $user_id = $this->faker->unique()->numberBetween(3, 18);
+        $session_id =  \Str::random(26);
         $name = $this->faker->name;
         $email = $this->faker->email;
         $phone = $this->faker->phoneNumber;
         $address = $this->faker->address;
 
         return [
-            'userId' => $userId,
-            'sessionId' => $sessionId,
+            'user_id' => $user_id,
+            'session_id' => $session_id,
             'name' => $name,
             'email' => $email,
             'phone' => $phone,

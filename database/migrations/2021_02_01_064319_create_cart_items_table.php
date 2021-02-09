@@ -16,8 +16,8 @@ class CreateCartItemsTable extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('productId')->unsigned();
-            $table->bigInteger('cartId')->unsigned();
+            $table->bigInteger('product_id')->unsigned();
+            $table->bigInteger('cart_id')->unsigned();
             $table->mediumInteger('quantity')->unsigned();
 
             $table->timestamps();

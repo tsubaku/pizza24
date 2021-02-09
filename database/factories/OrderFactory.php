@@ -23,8 +23,8 @@ class OrderFactory extends Factory
     public function definition()
     {
 
-        $sessionId =  \Str::random(26);
-        $userId = $this->faker->unique($reset = true)->numberBetween(3, 19);
+        $session_id =  \Str::random(26);
+        $user_id = $this->faker->unique($reset = true)->numberBetween(3, 19);
         $status = $this->faker->numberBetween(0, 3);
         $total = $this->faker->randomFloat(null, 5, 20);
         $name = $this->faker->name;
@@ -34,8 +34,8 @@ class OrderFactory extends Factory
 
         return [
 
-            'sessionId' => $sessionId,
-            'userId' => $userId,
+            'session_id' => $session_id,
+            'user_id' => $user_id,
             'status' => $status,
             'total' => $total,
             'name' => $name,

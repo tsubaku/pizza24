@@ -18,11 +18,11 @@ class CreateProductsTable extends Migration
 
             $table->string('title');
             $table->string('slug')->unique();
-            $table->bigInteger('categoryId')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
             $table->text('description')->nullable();
             $table->float('price')->nullable();
-            $table->string('imageUrl')->nullable();
-            $table->boolean('isPublished')->default(false);
+            $table->string('image_url')->nullable();
+            $table->boolean('is_published')->default(false);
 
             $table->timestamps();
 
