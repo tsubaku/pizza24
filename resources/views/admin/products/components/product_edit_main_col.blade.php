@@ -44,7 +44,7 @@
                         <label for="description">Description</label>
                         <textarea name="description" id="description" type="text"
                                   class="form-control" placeholder="description"
-                        > {{ old('description', $item->description) }} </textarea>
+                        >{{ old('description', $item->description) }}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -54,7 +54,12 @@
                         >
                     </div>
 
-                    <p>image_url={{ $item->image_url }}</p>
+                    <div class="form-group">
+                        <label for="image">Select product image</label>
+                        <input name="image" value="{{ old('image_url', $item->image_url) }}"
+                               id="image" type="file" class="form-control">
+                    </div>
+
 
                     <div class="form-check">
                         <input name="is_published" type="hidden" value="0">

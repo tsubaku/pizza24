@@ -9,19 +9,19 @@
         @include('admin.layouts.result_messages')
 
         @if($item->exists)
-            <form method="post" action="{{ route('admin.products.update', $item->id) }}">
+            <form method="post" action="{{ route('admin.products.update', $item->id) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @else
-                    <form method="post" action="{{ route('admin.products.store') }}">
+                    <form method="post" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                         @endif
 
                         @csrf
                         <div class="row justify-content-center">
                             <div class="col-md-8">
-                                @include('admin.products.includes.product_edit_main_col')
+                                @include('admin.products.components.product_edit_main_col')
                             </div>
                             <div class="col-md-3">
-                                @include('admin.products.includes.product_edit_add_col')
+                                @include('admin.products.components.product_edit_add_col')
                             </div>
                         </div>
 

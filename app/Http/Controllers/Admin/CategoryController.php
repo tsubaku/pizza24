@@ -9,6 +9,8 @@ use App\Repositories\CategoryRepository;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Requests\CategoryCreateRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 class CategoryController extends Controller
 {
 
@@ -60,7 +62,8 @@ class CategoryController extends Controller
      */
     public function store(CategoryCreateRequest $request)
     {
-        $data = $request->input();
+        //$data = $request->input();
+        $data = $this->categoryRepository->processRequest($request);
 
         #Create and save to db object
         //1 Way
@@ -73,7 +76,7 @@ class CategoryController extends Controller
         //3 Way
         //$item = Category::create($data);
 
-        $goTo = $this->categoryRepository->goAfterSaveCategory($saveResult, $item);
+        $goTo = $this->categoryRepository->redirectAfterSaveCategory($saveResult, $item);
 
         return $goTo;
     }
@@ -98,7 +101,6 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $item = $this->categoryRepository->getEdit($id);
-        // dd($item);
         if (empty($item)) {
             abort(404);
         }
@@ -122,13 +124,23 @@ class CategoryController extends Controller
                 ->withErrors(['msg' => "Category id=$id not found"])
                 ->withInput();
         }
-        $data = $request->all();
+        //$data = $request->all();
+        $data = $this->categoryRepository->processRequest($request);
+
+        #working with a request
+        if ($request->hasFile('image')) {
+            $newFileName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs(
+                'public', $newFileName
+            );
+            $data['image_url'] = $newFileName;
+        }
 
         $saveResult = $item
             ->fill($data)
-            ->save();       //запись в бд
+            ->save();       //writing in DB
 
-        $goTo = $this->categoryRepository->goAfterSaveCategory($saveResult, $item);
+        $goTo = $this->categoryRepository->redirectAfterSaveCategory($saveResult, $item);
 
         return $goTo;
 
@@ -143,10 +155,16 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //Soft removal, remains in the database
-        $result = Category::destroy($id);//в $result попадёт кол-во удалённых записей
+        //$result = Category::destroy($id);//в $result попадёт кол-во удалённых записей
 
         //Complete removal from the database
-        //$result = Post::find($id)->forceDelete();
+        $item = $this->categoryRepository->getEdit($id);
+        if ($item->image_url) {
+            Storage::delete('public/' . $item->image_url);
+        }
+        $result = Category::find($id)->forceDelete();
+
+
 
         if ($result) {
             return redirect()

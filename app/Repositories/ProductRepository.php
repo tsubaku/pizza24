@@ -8,10 +8,10 @@ use App\Models\Product as Model;
 //use Illuminate\Pagination\LengthAwarePaginator;
 //use PhpParser\Node\Expr\AssignOp\Concat;
 
+use App\Models\Product;
+
 class ProductRepository extends CoreRepository
 {
-
-
     /**
      * Implementation of an abstract method from CoreRepository
      * @return string
@@ -20,6 +20,18 @@ class ProductRepository extends CoreRepository
     {
         return Model::class;
     }
+
+    /**
+     * Get a model for editing in the admin panel
+     *
+     * @param int $id
+     * @return Model
+     */
+    public function getEdit($id)
+    {
+        return $this->startConditions()->find($id);
+    }
+
 
     /**
      * Get a list of articles to be displayed by the paginator in the list
@@ -36,12 +48,11 @@ class ProductRepository extends CoreRepository
 
             ->with([
                 //1 Way
-          ///      'category' => function ($query) {       //category () relation is described in the model and for it
-         ///           $query->select(['id', 'title']);    //the processing should be as follows: 2 fields are needed
-
-         ///       },
+                ///'category' => function ($query) {       //category () relation is described in the model and for it
+                ///$query->select(['id', 'title']);    //the processing should be as follows: 2 fields are needed
+                ///},
                 //2 Way
-               // 'user:id,name',//we will refer to the user relation, from which we need id and name
+                //'user:id,name',//we will refer to the user relation, from which we need id and name
                 'category:id,title',//we will refer to the user relation, from which we need id and name
             ])
             ->paginate($perPage);
@@ -51,14 +62,22 @@ class ProductRepository extends CoreRepository
 
 
     /**
-     * Get a model for editing in the admin panel
+     * Get referral address
      *
-     * @param int $id
-     * @return Model
+     * @param boolean $saveResult
+     * @param Product $item
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function getEdit($id)
+    public function redirectAfterSaveProduct($saveResult, $item)
     {
-        return $this->startConditions()->find($id);
+        if ($saveResult) {
+            return redirect()->route('admin.products.edit', $item->id)
+                ->with(['success' => 'Saved successfully']);
+        } else {
+            return back()->withErrors(['msg' => 'Save error'])->withInput();
+        }
     }
+
+
 
 }

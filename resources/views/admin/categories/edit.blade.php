@@ -8,11 +8,12 @@
     @include('admin.layouts.result_messages')
 
     @if($item->exists)
-        <form method="post" action="{{ route('admin.categories.update', $item->id) }}">
+        <form method="post" action="{{ route('admin.categories.update', $item->id) }}" enctype="multipart/form-data">
             @method('PATCH')
             @else
-                <form method="post" action="{{ route('admin.categories.store') }}">
+                <form method="post" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
                     @endif
+
                     @csrf
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -24,20 +25,21 @@
                     </div>
                 </form>
 
-                <form method="post" action="{{ route('admin.categories.destroy', $item->id) }}">
-                    @method('DELETE')
-                    @csrf
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                @if($item->exists)
+                    <form method="post" action="{{ route('admin.categories.destroy', $item->id) }}">
+                        @method('DELETE')
+                        @csrf
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                        </div>
-                    </div>
-                </form>
-
+                    </form>
+    @endif
 @endsection

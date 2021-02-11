@@ -33,7 +33,9 @@
                             @php /** @var \App\Models\Product $product */ @endphp
                             <tr {{ $product->is_published ? '' : 'class=td-draft'}} >
                                 <td>{{$product->id}}</td>
-                                <td>{{$product->image_url}}</td>
+                                <td>
+                                    <img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="">
+                                </td>
                                 <td>
                                     <a href="{{ route('admin.products.edit', $product->id) }}">{{$product->title}}</a>
                                 </td>

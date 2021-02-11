@@ -24,7 +24,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Categories</th>
+                            <th>Image</th>
+                            <th>Category</th>
                             <th>Parent</th>
                         </tr>
                         </thead>
@@ -33,6 +34,9 @@
                             @php /** @var \App\Models\Category $item */ @endphp
                             <tr>
                                 <td>{{$item->id}}</td>
+                                <td>
+                                    <img class="img-thumbnail" src="{{asset("storage/$item->image_url")}}" alt="">
+                                </td>
                                 <td>
                                     <a href="{{  route('admin.categories.edit', $item->id) }}">{{$item->title}}</a>
                                 </td>

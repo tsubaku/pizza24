@@ -12,8 +12,9 @@
         Image
     </div>
     <div class="card-body">
-        <h5 class="card-title">{{ $item->image_url }}</h5>
-        <p class="card-text">.......</p>
+        <div class="form-group">
+            <img class="img-thumbnail" src="{{asset("storage/$item->image_url")}}" alt="">
+        </div>
     </div>
 </div>
 

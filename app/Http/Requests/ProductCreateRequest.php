@@ -29,7 +29,7 @@ class ProductCreateRequest extends FormRequest
             'category_id' =>'required|integer|exists:categories,id',
             'description' =>'string|min:3|max:1000',
             'price' =>'required|numeric|between:0.01,999.99',
-            'image_url' =>'',
+            'image_url' =>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_published' =>'required|boolean',
         ];
     }

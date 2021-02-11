@@ -11,6 +11,7 @@ use App\Repositories\CategoryRepository;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Requests\ProductCreateRequest;
 
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -62,16 +63,23 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
-        $data = $request->input();
+        // $data = $request->input();
+        $data = $this->productRepository->processRequest($request);
 
-        $item = (new Product())->create($data);
+        //$item = (new Product())->create($data);
+        $item = new Product($data);
+        $saveResult = $item->save();
 
+        $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
+        /*
         if ($item) {
             return redirect()->route('admin.products.edit', [$item->id])
                 ->with(['success' => 'Saved successfully']);
         } else {
             return back()->withErrors(['msg' => 'Save error'])->withInput();
         }
+        */
+        return $goTo;
     }
 
     /**
@@ -111,28 +119,21 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, $id)
     {
-       // $is_published = (bool)$request->get('is_published', false);
-
-     //   dd($request);
         $item = $this->productRepository->getEdit($id);
         if (empty($item)) {
             return back()
                 ->withErrors(['msg' => "Product id=$id not found"])
                 ->withInput();
         }
-        $data = $request->all();
 
-        $result = $item->update($data);
+        #working with a request
+        //$data = $request->all();
+        $data = $this->productRepository->processRequest($request);
 
-        if ($result) {
-            return redirect()
-                ->route('admin.products.edit', $item->id)
-                ->with(['success' => 'Saved successfully']);
-        } else {
-            return back()
-                ->withErrors('msg', 'Save error')
-                ->withInput();
-        }
+        $saveResult = $item->update($data);//writing in DB
+        $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
+
+        return $goTo;
     }
 
     /**
@@ -143,11 +144,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+
         //Soft delete
-        $result = Product::destroy($id); //$result will contain the number of deleted records
+        //$result = Product::destroy($id); //$result will contain the number of deleted records
 
         //Full delete
-        //$result = Product::find($id)->forceDelete();
+        $item = $this->productRepository->getEdit($id);
+        if ($item->image_url) {
+            Storage::delete('public/' . $item->image_url);
+        }
+        $result = Product::find($id)->forceDelete();
+
 
         if ($result) {
             return redirect()

@@ -24,7 +24,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//Админка
+//Admin Panel
 /*
 Route::prefix('admin')->group(function () {
     Route::resources([
@@ -35,7 +35,7 @@ Route::prefix('admin')->group(function () {
 */
 
 
-
+//Admin Panel
 //Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function() {
 Route::group(['prefix' => 'admin'], function() {
     Route::resource('categories', CategoryController::class)

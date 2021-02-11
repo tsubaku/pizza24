@@ -27,7 +27,7 @@ class ProductFactory extends Factory
         $description = $this->faker->realText(rand(300, 500)); //realText - текст 1000-3000 символов
         $is_published = rand(1, 5) > 1;//1 из 5 неопубликован
         $price = $this->faker->randomFloat(null, 5, 20);
-        $image_url = '';
+        $image_url = 'not-available.png';
 
         return [
             'title' => $title,
