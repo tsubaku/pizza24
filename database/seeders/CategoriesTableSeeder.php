@@ -13,7 +13,7 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $categoryName = '_Root category_';
+        $categoryName = 'All';
         $data[] = [
             'title' => $categoryName,
             'slug' => \Str::slug($categoryName),
@@ -31,7 +31,7 @@ class CategoriesTableSeeder extends Seeder
             'image_url' => 'not-available.png'
         ];
 
-        $categoryName = 'Pizza sauces';
+        $categoryName = 'Pizza sauce';
         $data[] = [
             'title' => $categoryName,
             'slug' => \Str::slug($categoryName),

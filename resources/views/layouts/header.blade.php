@@ -1,12 +1,9 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand mr-4" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
-                Admin panel
             </a>
-
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -17,15 +14,25 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
 
-                    <a class="p-2 text-dark" href="{{ route('admin.categories.index') }}">Categories</a>
-                    <a class="p-2 text-dark" href="{{ route('admin.products.index') }}">Product</a>
-                    <a class="p-2 text-dark" href="#">Users</a>
-                    <a class="p-2 text-dark" href="#">Carts</a>
-                    <a class="p-2 text-dark" href="#">Orders</a>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach($categoryList as $category)
+                                    <a class="dropdown-item"
+                                       href="{{ route('index', ['category' => $category->id]) }}">{{$category->title}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
@@ -59,10 +66,8 @@
                             </div>
                         </li>
                     @endguest
-
                 </ul>
             </div>
         </div>
     </nav>
-
 </header>

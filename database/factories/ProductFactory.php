@@ -23,8 +23,8 @@ class ProductFactory extends Factory
     {
         $title = $this->faker->unique()->words(rand(1, 3), true); //sentence - предложение (3-8 слов)
         //$title = $this->faker->asciify('gfshfksjfhaaeee'); //sentence - предложение (3-8 слов)
-        $category_id = rand(1, 3);
-        $description = $this->faker->realText(rand(300, 500)); //realText - текст 1000-3000 символов
+        $category_id = rand(2, 4);
+        $description = $this->faker->realText(rand(100, 300)); //realText - текст 1000-3000 символов
         $is_published = rand(1, 5) > 1;//1 из 5 неопубликован
         $price = $this->faker->randomFloat(null, 5, 20);
         $image_url = 'not-available.png';

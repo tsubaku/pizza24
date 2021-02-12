@@ -1,62 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+###THE PIZZA TASK
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+###1. Task description
+Let’s imagine you want to start a new pizza delivery business. Please create a small web application for online pizza ordering. The idea is to make a non-existing service where assumed clients can choose a pizza, put it into a cart and make an order.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+###2. Requirements
+✔ The task should be completed in English
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✔ The menu page should contain at least 8 pizzas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+✔ Please add a currency switch so that the clients can change prices from dollars into euro and vice versa
 
-## Learning Laravel
+✔ Don’t forget to add delivery costs to the final bill. It can be a static figure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+✔ The app should have login and registration options. Please make sure that the login option is not mandatory for users (in other words, a user should be able to make an order without logging in)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+✔ Logged users should be able to see their history of orders
 
-## Laravel Sponsors
+✔ Don’t proceed to the payment page. The last action from a client will be filling in the order form (address,
+name, surname, etc.) to get a confirmation that the order has been received
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+✔ Please, add a form validation for the login (password validation, e-mail validation, etc.)
 
-### Premium Partners
+###Most frequent mistakes to avoid:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+✖ Cart loses items when you refresh the page
 
-## Contributing
+✖ It is impossible to change the number of items inside the cart or in the menu
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+✖ It is impossible to understand whether you added a pizza to the cart or not
 
-## Code of Conduct
+✖ Page refreshes after every action you perform in the app
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+✖ No currency switch
 
-## Security Vulnerabilities
+✖ Weak form validation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+✖ User can add a negative amount of pizzas and get a negative payment amount
 
-## License
+✖ No separate page for the cart
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+✖ No pictures of pizzas
+
+✖ You have to be logged in to make an order
+
+✖ No form validation prefill for logged users
+
+✖ No REST principles followed
+
+✖ No readme file in repos
+
+###3. Technologies
+✅ If you are seeking a frontend position, please use React as a frontend technology. Backend is up to your discretion.
+
+✅ If you are seeking a backend position, please use Laravel as a backend technology. Frontend is up to your discretion.
+
+✅ If you are seeking a full-stack position, it is preferably but not mandatory that you use Laravel/React stack.
+
+###4. Delivery format
+✅ Please provide a link to your repository (front and back) and a direct link to the deployed version of your application (e.g.
+on Heroku)
+
+✅ Please provide a readme file for both repos
+
+###5. Resources
+✅ Deployment of the application: any free hosting platform (e.g. Heroku) or your own server
+
+___
+
+## Deployment 
+
+1. After installation on the server, you need to link storage: __php artisan storage:link__
+2. The default image __not-available.png__ for products and categories need to be manually copied to __\\storage\app\public\\__. All other pictures uploaded via the admin panel are stored there. 
+
+
+
+
+
+
+
+

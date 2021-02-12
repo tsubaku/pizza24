@@ -62,7 +62,7 @@ class CategoryRepository extends CoreRepository
     {
         $columns = implode(', ', [
             'id',
-            'CONCAT (id, ". ", title) AS idTitle',
+            'title',
         ]);
 
         $result = $this

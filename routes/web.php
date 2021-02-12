@@ -15,28 +15,14 @@ use App\Http\Controllers\Admin\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+#Index page
+Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-//Admin Panel
-/*
-Route::prefix('admin')->group(function () {
-    Route::resources([
-        'categories' => CategoryController::class,
-        'products' => ProductController::class,
-    ]);
-});
-*/
-
-
-//Admin Panel
-//Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function() {
+#Admin Panel
 Route::group(['prefix' => 'admin'], function() {
     Route::resource('categories', CategoryController::class)
         ->names('admin.categories');
@@ -44,17 +30,4 @@ Route::group(['prefix' => 'admin'], function() {
         ->names('admin.products');
 });
 
-/*
-#
-Route::get('/greeting', function () {
-    return 'Hello World';
-})->name('greeting');
-#
-Route::get('/user', [\App\Http\Controllers\Admin\CategoryController::class, 'index']);
-#
-Route::get(
-    '/admin/categories1',
-    [CategoryController::class, 'index']
-)->name('admin.categories1');
-#
-*/
+
