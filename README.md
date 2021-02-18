@@ -71,7 +71,11 @@ ___
 ## Deployment 
 
 1. After installation on the server, you need to link storage: __php artisan storage:link__
-2. The default image __not-available.png__ for products and categories need to be manually copied to __\\storage\app\public\\__. All other pictures uploaded via the admin panel are stored there. 
+2. Need to be manually copied to __\\storage\app\public\\__:
+* The default image __not-available.png__ for products and categories
+* Footer picture __pizza-1.jpg__
+ 
+ All other pictures uploaded via the admin panel are stored there. 
 
 
 

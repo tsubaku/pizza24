@@ -3,6 +3,8 @@
         <div class="container">
             <a class="navbar-brand mr-4" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
+            </a>
+            <a class="navbar-brand mr-4" href="{{ url('/admin/settings') }}">
                 Admin panel
             </a>
 
@@ -19,7 +21,7 @@
 
                     <a class="p-2 text-dark" href="{{ route('admin.categories.index') }}">Categories</a>
                     <a class="p-2 text-dark" href="{{ route('admin.products.index') }}">Product</a>
-                    <a class="p-2 text-dark" href="#">Users</a>
+                    <a class="p-2 text-dark" href="{{ route('admin.settings.index') }}">Settings</a>
                     <a class="p-2 text-dark" href="#">Carts</a>
                     <a class="p-2 text-dark" href="#">Orders</a>
                 </ul>

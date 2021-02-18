@@ -3,13 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Product as Model;
-use App\Models\Product;
 
 
-class IndexRepository extends CoreRepository
+class AjaxRepository extends CoreRepository
 {
     /**
      * Implementation of an abstract method from CoreRepository
+     *
      * @return string
      */
     public function getModelClass()
@@ -30,35 +30,25 @@ class IndexRepository extends CoreRepository
 
 
     /**
-     * Get a list of articles to be displayed by the paginator in the list
+     * Get (and recalculate if necessary)  of the price of all products on the page.
+     * Called when the currency is changed.
      *
      * @param  int $perPage
      * @param  int $selected
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getWithPaginate($perPage = null, $selected = null, $exchangeRate = null )
+    public function getProductPrices($currencyName, $exchangeRate)
     {
-
-        #If a category is specified and it is NOT root, then the category is checked
-        if ($selected <= 1) {
-            $b = '<>';
-            $selected = 0;
-        } else {
-            $b = '=';
+        if ($currencyName != $this::USD_NAME_CURRENCY) {
+            $exchangeRate = 1;
         }
 
-        #Get data
         $results = $this
             ->startConditions()
-            ->select('id', 'title', 'slug', 'category_id', 'description', 'image_url',
+            ->select('id',
                 \DB::raw("ROUND((price / $exchangeRate),2) AS price"))
             ->where('is_published', 1)
-            ->where('category_id', $b, $selected)
-            ->orderBy('id', 'ASC')
-            ->with([
-                'category:id,title',//we will refer to the user relation, from which we need id and name
-            ])
-            ->paginate($perPage);
+            ->get();
 
         return $results;
     }

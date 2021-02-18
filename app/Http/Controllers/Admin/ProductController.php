@@ -131,6 +131,7 @@ class ProductController extends Controller
         $data = $this->productRepository->processRequest($request);
 
         $saveResult = $item->update($data);//writing in DB
+        dd($id, $saveResult, $data, $item, $request);
         $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
 
         return $goTo;

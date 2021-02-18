@@ -9,12 +9,12 @@
                 <p class="lead">Quickly build an effective pricing table for your potential customers with this
                     Bootstrap
                     example. It’s built with default Bootstrap components and utilities with little customization.</p>
+
             </div>
         </div>
     </div>
 
     <div class="row">
-
 
         @foreach($paginator as $product)
             <div class="col-4">
@@ -29,8 +29,8 @@
                         <div class="card-body">
                             <h5>{{$product->category->title}}</h5>
                             <h1 class="card-title pricing-card-title">
-                                <small class="text-muted">$</small>
-                                {{$product->price}}
+                                <small class="text-muted d-inline divCurrencyName">{{$currencyLogo}}</small>
+                                <div class="divPrice d-inline" id="idPrice{{$product->id}}"> {{$product->price}} </div>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li><img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="">
@@ -44,10 +44,7 @@
             </div>
         @endforeach
 
-
     </div>
     @include('layouts.paginator')
-
-
 
 @endsection

@@ -18,6 +18,18 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item px-3 ">
+                        <select id="selectCurrency" class="custom-select ">
+                            <option class="currencySet"
+                                    value="EUR" {{Cookie::get('currency')=='EUR' ? 'selected=selected' : '' }}>EUR
+                            </option>
+                            <option class="currencySet"
+                                    value="USD" {{Cookie::get('currency')=='USD' ? 'selected=selected' : '' }}>USD
+                            </option>
+                        </select>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"

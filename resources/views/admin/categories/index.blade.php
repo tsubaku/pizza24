@@ -33,7 +33,7 @@
                         @foreach($paginator as $item)
                             @php /** @var \App\Models\Category $item */ @endphp
                             <tr>
-                                <td>{{$item->id}}</td>
+                                <th>{{$item->id}}</th>
                                 <td>
                                     <img class="img-thumbnail" src="{{asset("storage/$item->image_url")}}" alt="">
                                 </td>

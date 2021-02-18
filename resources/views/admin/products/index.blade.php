@@ -32,7 +32,7 @@
                         @foreach($paginator as $product)
                             @php /** @var \App\Models\Product $product */ @endphp
                             <tr {{ $product->is_published ? '' : 'class=td-draft'}} >
-                                <td>{{$product->id}}</td>
+                                <th>{{$product->id}}</th>
                                 <td>
                                     <img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="">
                                 </td>

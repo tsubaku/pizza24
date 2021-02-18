@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Price</label>
+                        <label for="price">Price, €</label>
                         <input name="price" value="{{ old('price', $item->price) }}"
                                id="price" type="text" class="form-control"
                         >

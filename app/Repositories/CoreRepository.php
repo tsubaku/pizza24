@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 abstract class CoreRepository
 {
     const PICTURES_NOT_AVAILABLE = 'not-available.png';
+    const USD_NAME_CURRENCY = 'USD';
 
     /**
      * @var Model
