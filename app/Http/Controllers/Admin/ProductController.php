@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function index()
     {
         $paginator = $this->productRepository->getAllWithPaginate(10);
-//dd($paginator);
+
         return view('admin.products.index', compact('paginator'));
     }
 
@@ -71,14 +71,7 @@ class ProductController extends Controller
         $saveResult = $item->save();
 
         $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
-        /*
-        if ($item) {
-            return redirect()->route('admin.products.edit', [$item->id])
-                ->with(['success' => 'Saved successfully']);
-        } else {
-            return back()->withErrors(['msg' => 'Save error'])->withInput();
-        }
-        */
+
         return $goTo;
     }
 

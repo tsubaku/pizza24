@@ -50,14 +50,7 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        //Статья принадлежит пользователю
-        return $this->belongsTo(User::class);
-    }
+
 
 }
 

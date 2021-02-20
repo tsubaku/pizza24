@@ -5,8 +5,6 @@ Let’s imagine you want to start a new pizza delivery business. Please create a
 
 
 ###2. Requirements
-✔ The task should be completed in English
-
 ✔ The menu page should contain at least 8 pizzas
 
 ✔ Please add a currency switch so that the clients can change prices from dollars into euro and vice versa

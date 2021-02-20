@@ -41,10 +41,10 @@ class IndexRepository extends CoreRepository
 
         #If a category is specified and it is NOT root, then the category is checked
         if ($selected <= 1) {
-            $b = '<>';
+            $checkType  = '<>';
             $selected = 0;
         } else {
-            $b = '=';
+            $checkType = '=';
         }
 
         #Get data
@@ -53,7 +53,7 @@ class IndexRepository extends CoreRepository
             ->select('id', 'title', 'slug', 'category_id', 'description', 'image_url',
                 \DB::raw("ROUND((price / $exchangeRate),2) AS price"))
             ->where('is_published', 1)
-            ->where('category_id', $b, $selected)
+            ->where('category_id', $checkType, $selected)
             ->orderBy('id', 'ASC')
             ->with([
                 'category:id,title',//we will refer to the user relation, from which we need id and name

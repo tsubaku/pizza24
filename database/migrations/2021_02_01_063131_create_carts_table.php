@@ -18,10 +18,10 @@ class CreateCartsTable extends Migration
 
             $table->bigInteger('user_id')->unsigned()->unique();
             $table->string('session_id')->unique();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('address');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
 
             $table->timestamps();
 
