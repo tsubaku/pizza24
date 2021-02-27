@@ -10021,3 +10021,8 @@ h3 {
 .root-color {
   color: #aaaaab;
 }
+
+/* Set "Disable" for the Decrement button */
+.disabled {
+  pointer-events: none;
+}

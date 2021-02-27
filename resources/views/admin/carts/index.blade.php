@@ -20,7 +20,7 @@
                         <tr>
                             <th>id</th>
                             <th>User name (from user table)</th>
-                            <th>Session_id</th>
+                            <th>Session_id <small>(for debugging)</small></th>
                             <th>Name (from cart table)</th>
                             <th>E-mail</th>
                             <th>Phone</th>
@@ -35,12 +35,12 @@
                             @php /** @var \App\Models\Cart $item */ @endphp
                             <tr  {{ $item->cart_item->count() ? '' : 'class=td-draft'}}>
                                 <th>{{$item->id}}</th>
-                                <td>{{$item->user->name}}</td>
+                                <td>{{$item->user_id ? $item->user->name : '' }}</td>
                                 <td><a href="{{ route('admin.carts.show', $item) }}">{{$item->session_id}}</a></td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>{{$item->phone}}</td>
-                                <td>{{$item->address ? $item->address : '' }}</td>
+                                <td>{{$item->address }}</td>
                                 <td>{{$item->created_at }}</td>
                                 <td >{{$item->cart_item->count()}}</td>
                                 <td>

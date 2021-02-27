@@ -19,6 +19,7 @@
                             <thead>
                             <tr>
                                 <th>id</th>
+                                <th>Image</th>
                                 <th>product_id</th>
                                 <th>Product title</th>
                                 <th>cart_id</th>
@@ -33,6 +34,10 @@
                                 @php /** @var \App\Models\Cart $item */ @endphp
                                 <tr>
                                     <th>{{$item->id}}</th>
+                                    <td>
+                                        <img class="img-thumbnail" src="{{asset("storage/".$item->product->image_url)}}"
+                                             alt="Product image">
+                                    </td>
                                     <td>{{$item->product_id}}</td>
                                     <td>{{$item->product->title}}</td>
                                     <td>{{$item->cart_id}}</td>

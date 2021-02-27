@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BlogPost
+ * Class Product
  *
  * @package App\Models
  *
- * @property \App\Models\Category       $category
- * @property \App\Models\User           $user
- * @property string                     $title
- * @property string                     $slug
- * @property integer                    $category_id
- * @property string                     $description
- * @property float                      $price
- * @property string                     $image_url
- * @property boolean                    $is_published
+ * @property \App\Models\Category $category
+ * @property \App\Models\Cart_item $cart_item
+ * @property string $title
+ * @property string $slug
+ * @property integer $category_id
+ * @property string $description
+ * @property float $price
+ * @property string $image_url
+ * @property boolean $is_published
  */
 class Product extends Model
 {
@@ -49,6 +49,16 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * To get the quantity the product in the current cart
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function cart_item()
+    {
+        return $this->hasOne(Cart_item::class);
     }
 
 

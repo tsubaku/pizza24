@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\Cart_ItemController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\SiteCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ use App\Http\Controllers\AjaxController;
 
 #Index page
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
+
+#Cart page
+Route::resource('cart', SiteCartController::class)->names('cart');
 
 Auth::routes();
 
@@ -48,6 +52,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 /* AJAX requests */
 Route::post('/ajaxGetPrices', [AjaxController::class, 'ajaxGetPrices'])->name('ajaxGetPrices');
+Route::post('/ajaxAddProduct', [AjaxController::class, 'ajaxAddProduct'])->name('ajaxAddProduct');
+Route::post('/ajaxDecProduct', [AjaxController::class, 'ajaxDecProduct'])->name('ajaxDecProduct');
 
 
 

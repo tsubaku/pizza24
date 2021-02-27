@@ -22,7 +22,7 @@ class CartFactory extends Factory
     public function definition()
     {
         $user_id = $this->faker->unique()->numberBetween(3, 18);
-        $session_id =  \Str::random(26);
+        $session_id =  \Str::random(40);
         $name = $this->faker->name;
         $email = $this->faker->email;
         $phone = $this->faker->phoneNumber;

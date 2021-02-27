@@ -33,7 +33,7 @@ class CartRepository extends CoreRepository
 
     /**
      * Get a list of carts to be displayed by the paginator in the list
-     * 
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getAllWithPaginate($perPage = null)
@@ -55,12 +55,18 @@ class CartRepository extends CoreRepository
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getCartItemsWithPaginate($perPage, $id)
+    public function getCartItemsWithPaginate($perPage, $cartId)
     {
         $columns = ['id', 'product_id', 'cart_id', 'quantity'];
         $results = Cart_item::orderBy('id', 'ASC')
             ->select($columns)
-            ->where('cart_id', $id)
+            ->where('cart_id', $cartId)
+            ->with([
+                'product:id,image_url',//we will refer to the category relation
+               // 'cart_item' => function ($query) use ($cartId) {
+              //      $query->where('cart_id', $cartId)->select(['product_id', 'quantity']);
+              //  }
+            ])
             ->paginate($perPage);
 
         return $results;

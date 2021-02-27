@@ -22,7 +22,7 @@ class Cart_item extends Model
     ];
 
     /**
-     * For "Product title" in list Cart items
+     * For Product title and Images URL in list Cart items (on the site and in the admin panel)
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

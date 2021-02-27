@@ -34,7 +34,7 @@
                             <tr {{ $product->is_published ? '' : 'class=td-draft'}} >
                                 <th>{{$product->id}}</th>
                                 <td>
-                                    <img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="">
+                                    <img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="Product image">
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.products.edit', $product->id) }}">{{$product->title}}</a>

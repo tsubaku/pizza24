@@ -9,12 +9,13 @@
                 <p class="lead">Quickly build an effective pricing table for your potential customers with this
                     Bootstrap
                     example. It’s built with default Bootstrap components and utilities with little customization.</p>
-
+                Session id: {{$sessionId}} <br>
+                $cartId: {{$cartId}}<br>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="productBlock">
 
         @foreach($paginator as $product)
             <div class="col-4">
@@ -37,7 +38,12 @@
                                 </li>
                                 <li>{{$product->description}}</li>
                             </ul>
-                            <button type="button" class="btn btn-lg btn-block btn-primary">Add to cart</button>
+                            <button type="button" id="idAddButton{{$product->id}}"
+                                    class="buttonAddProduct btn btn-lg btn-block btn-primary">Add to cart
+                                <div id="divCount{{$product->id}}">
+                                    {{$product->cart_item ? '(' . $product->cart_item->quantity . ' pieces)' : '' }}
+                                </div>
+                            </button>
                         </div>
                     </div>
                 </div>

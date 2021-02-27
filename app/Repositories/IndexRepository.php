@@ -36,7 +36,7 @@ class IndexRepository extends CoreRepository
      * @param  int $selected
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getWithPaginate($perPage = null, $selected = null, $exchangeRate = null )
+    public function getWithPaginate($perPage, $selected, $exchangeRate, $cartId )
     {
 
         #If a category is specified and it is NOT root, then the category is checked
@@ -56,7 +56,10 @@ class IndexRepository extends CoreRepository
             ->where('category_id', $checkType, $selected)
             ->orderBy('id', 'ASC')
             ->with([
-                'category:id,title',//we will refer to the user relation, from which we need id and name
+                'category:id,title',//we will refer to the category relation
+                'cart_item' => function ($query) use ($cartId) {
+                    $query->where('cart_id', $cartId)->select(['product_id', 'quantity']);
+                }
             ])
             ->paginate($perPage);
 

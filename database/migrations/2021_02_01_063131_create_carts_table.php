@@ -16,7 +16,7 @@ class CreateCartsTable extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('user_id')->unsigned()->unique();
+            $table->bigInteger('user_id')->unsigned()->nullable()->unique();
             $table->string('session_id')->unique();
             $table->string('name')->nullable();
             $table->string('email')->nullable();

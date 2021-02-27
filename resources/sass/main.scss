@@ -19,3 +19,8 @@ $margin: 2px;
 .root-color {
     color: #aaaaab;
 }
+
+/* Set "Disable" for the Decrement button */
+.disabled {
+    pointer-events: none;
+}

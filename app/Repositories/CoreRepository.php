@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Collection;
+
 /**
  * Class CoreRepository
  *
@@ -24,8 +26,8 @@ abstract class CoreRepository
      */
     public function __construct()
     {
-        $this->model = app($this->getModelClass()); //creation through the service provider
-        //$this->model = new $this->getModelClass(); //analogue
+        $this->model = app($this->getModelClass()); //creation through the service provider.
+        //$this->model = new $this->getModelClass(); //analogue.
     }
 
 
@@ -42,6 +44,8 @@ abstract class CoreRepository
 
 
     /**
+     * Returns the request data. If a picture was passed in the request, it saves it to the store.
+     *
      * @param $request
      * @return array
      */
@@ -60,6 +64,26 @@ abstract class CoreRepository
         }
 
         return $data;
+    }
+
+    /**
+     * Get Cart id (if exist) or 0 (if not exist)
+     *
+     * @param  string $fieldName
+     * @param  string $fieldValue
+     * @param  Collection $model
+     * @return int
+     */
+    public function getItemId($fieldName, $fieldValue, $model)
+    {
+        $result = $model->where($fieldName, $fieldValue)->isNotEmpty();
+        if ($result) {
+            $result = $model->where($fieldName, $fieldValue)->first();
+            $itemId = $result->id;
+        } else {
+            $itemId = 0;
+        }
+        return $itemId;
     }
 
 }

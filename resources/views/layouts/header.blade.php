@@ -45,6 +45,10 @@
                         </div>
                     </li>
 
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="{{ route('cart.index') }}">My Cart</a>
+                    </li>
+
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
