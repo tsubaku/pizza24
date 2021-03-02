@@ -30,20 +30,18 @@
                         </select>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Categories
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @empty($deliveryCosts)
+                        <li class="nav-item px-3 ">
+                            <select id="selectCategory" class="custom-select ">
                                 @foreach($categoryList as $category)
-                                    <a class="dropdown-item"
-                                       href="{{ route('index', ['category' => $category->id]) }}">{{$category->title}}</a>
+                                    <option class="categorySet" value="{{$category->id}}"
+                                    @isset($selectedCategory){{$category->id==$selectedCategory ? 'selected=selected' : '' }}@endisset>
+                                        {{$category->title}}
+                                    </option>
                                 @endforeach
-                            </div>
-                        </div>
-                    </li>
+                            </select>
+                        </li>
+                    @endempty
 
                     <li class="nav-item px-3">
                         <a class="nav-link" href="{{ route('cart.index') }}">My Cart</a>

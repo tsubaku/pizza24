@@ -60,14 +60,10 @@ class CategoryRepository extends CoreRepository
      */
     public function getForComboBox()
     {
-        $columns = implode(', ', [
-            'id',
-            'title',
-        ]);
-
+        $columns = ['id', 'title', 'slug'];
         $result = $this
             ->startConditions()
-            ->selectRaw($columns)
+            ->select($columns)
             ->toBase()
             ->get();
 

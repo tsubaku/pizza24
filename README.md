@@ -76,7 +76,8 @@ ___
  All other pictures uploaded via the admin panel are stored there. 
 
 
-
+#### Html tag naming.
+Html tags such as id and class are styled in __kebab-case__, except when used in java script. In this case, the tags are named in __camelCase__. 
 
 
 

@@ -24,7 +24,7 @@ class SettingUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'value' =>'required|numeric|between:0.01,99.99',
+            'value' =>'required|numeric|between:0.01,200',
         ];
     }
 }

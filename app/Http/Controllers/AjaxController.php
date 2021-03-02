@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart_item;
+use App\Repositories\CartRepository;
+use App\Repositories\IndexRepository;
 use Illuminate\Http\Request;
 
 use App\Repositories\AjaxRepository;
@@ -11,6 +13,7 @@ use Cookie;
 //use Session;
 
 use App\Models\Cart;
+use Illuminate\Validation\Rules\In;
 
 
 //use function PHPUnit\Framework\isNull;
@@ -27,6 +30,16 @@ class AjaxController extends Controller
      */
     private $settingRepository;
 
+    /**
+     * @var CartRepository
+     */
+    private $cartRepository;
+
+    /**
+     * @var IndexRepository
+     */
+    private $indexRepository;
+
 
     /**
      * SettingController constructor.
@@ -35,6 +48,8 @@ class AjaxController extends Controller
     {
         $this->ajaxRepository = app(AjaxRepository::class);
         $this->settingRepository = app(SettingRepository::class);
+        $this->cartRepository = app(CartRepository::class);
+        $this->indexRepository = app(IndexRepository::class);
     }
 
 
@@ -45,103 +60,110 @@ class AjaxController extends Controller
      */
     public function ajaxGetPrices(Request $request)
     {
-        $currencyName = $request->currency;
-        $exchangeRate = $this->settingRepository->getExchangeRate();
-        $productPrices = $this->ajaxRepository->getProductPrices($currencyName, $exchangeRate);
+        #Get price parameters
+        $currencyName = $request->currency; //From request only!
+        Cookie::queue('currency', $currencyName, 2628000);
 
-        Cookie::queue('currency', $currencyName);
+        $currencyLogo = $this->indexRepository->getCurrencyLogo($currencyName);
+        $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
 
-        echo json_encode(array(
-            'currency' => $currencyName,
-            'productPrices' => $productPrices
-        ));
+
+        $uri = substr(strrchr($_SERVER['HTTP_REFERER'], "/"), 1);//no use getRequestUri()! Its AJAX.
+        if ($uri == 'cart') {
+            #Get Cart_id for this Session_id
+            $sessionId = $this->indexRepository->getSessionId($request);
+            $cartId = $this->cartRepository->getCartId($sessionId);
+
+            #Get new full price for ALL products in the cart
+            $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId, $currentExchangeRate);
+            $paginator->map(function ($item, $key) {
+                $item['summ'] = round(($item['quantity'] * $item['product']->price), 2); //Add Summ in the collection
+                return $item;
+            });
+            $sums = $paginator->pluck('summ', 'product_id');
+            $pricesProductInCart = $paginator->pluck('product', 'id')->pluck('price', 'id');
+
+            $total = (float)$paginator->reduce(function ($carry, $item) {
+                return round(($carry + $item->quantity * $item->product->price), 2);
+            });
+            $deliveryCosts = $this->settingRepository->getDeliveryCosts($currentExchangeRate);
+            $fullPrice = round(($total + $deliveryCosts), 2);
+
+            echo json_encode(array(
+                //'currency' => $currencyName,
+                'currencyLogo' => $currencyLogo,
+                //'paginator' => $paginator,
+                'pricesProductInCart' => $pricesProductInCart,
+                'deliveryCosts' => $deliveryCosts,
+                'fullPrice' => $fullPrice,
+                'sums' => $sums,
+                'total' => $total,
+                'deliveryCosts' => $deliveryCosts,
+                //'currentExchangeRate' => $currentExchangeRate,
+            ));
+        } else {
+            $productPrices = $this->ajaxRepository->getProductPrices($currentExchangeRate);
+
+            echo json_encode(array(
+                //'currency' => $currencyName,
+                'currencyLogo' => $currencyLogo,
+                'productPrices' => $productPrices,
+                //'paginator' => $paginator,
+                //'currentExchangeRate' => $currentExchangeRate,
+            ));
+        }
+
 
     }
 
+
     /**
-     *
+     * Increment/Decrement current quantity.
      *
      * @param Request $request
      */
-    public function ajaxAddProduct(Request $request)
+    public function changeProductQuantity(Request $request)
     {
         #Get Session_id from cookie
-        $sessionName = session()->getName();
-        $sessionId = $request->cookie($sessionName);
+        $sessionId = $this->indexRepository->getSessionId($request);
 
         #Get Cart_id for this Session_id
-        $fieldName = 'session_id';
-        $model = Cart::all();
-        $cartId = $this->ajaxRepository->getItemId($fieldName, $sessionId, $model);
-
-        #If cart is new, add the cart to DB and return new Cart_id
-        if (empty($cartId)) {
-            $data = [
-                'session_id' => $sessionId
-            ];
-            $item = new Cart($data);
-            $item->save();
-            $cartId = $item->id;
-        }
+        $cartId = $this->cartRepository->getCartId($sessionId);
 
         #Add product to the Cart_item table
         $productId = $request->productId;
-        $newQuantity = $this->ajaxRepository->addCartItemId($productId, $cartId);
+        $action = $request->action;
+        if ($action == 'decrement') {
+            $newQuantity = $this->cartRepository->decCartItemId($productId, $cartId);
+        }
+        if ($action == 'increment') {
+            $newQuantity = $this->cartRepository->addCartItemId($productId, $cartId);
+        }
+
+        #Get Product Price Sum for this product
+        $currencyName = $this->indexRepository->getCurrencyName($request);
+        $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
+        $productPrice = $this->ajaxRepository->getProductPrice($currentExchangeRate, $productId);
+        $productPriceSum = round($productPrice * $newQuantity, 2);
+
+        #Get new full price
+        $deliveryCosts = $this->settingRepository->getDeliveryCosts($currentExchangeRate);
+        $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId, $currentExchangeRate);
+        $total = (float)$paginator->reduce(function ($carry, $item) {
+            return round(($carry + $item->quantity * $item->product->price), 2);
+        });
+        $fullPrice = round(($total + $deliveryCosts), 2);
 
         #Return data to the front
         echo json_encode(array(
             'productId' => $productId,
-            'session_id' => $sessionId,
-            'cartId' => $cartId,
-            'quantity' => $newQuantity
+            'quantity' => $newQuantity,
+            'productPriceSum' => $productPriceSum,
+            'deliveryCosts' => $deliveryCosts,
+            'fullPrice' => $fullPrice
+
         ));
-
-
     }
-
-    /**
-     *
-     *
-     * @param Request $request
-     */
-    public function ajaxDecProduct(Request $request)
-    {
-        #Get Session_id from cookie
-        $sessionName = session()->getName();
-        $sessionId = $request->cookie($sessionName);
-
-        #Get Cart_id for this Session_id
-        $fieldName = 'session_id';
-        $model = Cart::all();
-        $cartId = $this->ajaxRepository->getItemId($fieldName, $sessionId, $model);
-
-        #If cart is new, add the cart to DB and return new Cart_id
-        if (empty($cartId)) {
-            /*
-            $data = [
-                'session_id' => $sessionId
-            ];
-            $item = new Cart($data);
-            $item->save();
-            $cartId = $item->id;
-            */
-        }
-
-        #Add product to the Cart_item table
-        $productId = $request->productId;
-        $newQuantity = $this->ajaxRepository->decCartItemId($productId, $cartId);
-
-        #Return data to the front
-        echo json_encode(array(
-            'productId' => $productId,
-            'session_id' => $sessionId,
-            'cartId' => $cartId,
-            'quantity' => $newQuantity
-        ));
-
-
-    }
-
 
 }
 

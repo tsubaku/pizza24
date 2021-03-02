@@ -48,15 +48,16 @@ class SettingRepository extends CoreRepository
 
 
     /**
-     * Get current exchange rate.
+     * Get delivery costs.
      * @return mixed
      */
-    public function getExchangeRate()
+    public function getDeliveryCosts($exchangeRate)
     {
         $results = $this
             ->startConditions()
-            ->select('value')
-            ->where('name', 'exchange_rate')
+            //->select('value')
+            ->select(\DB::raw("ROUND((value / $exchangeRate),2) AS value"))
+            ->where('name', 'delivery_costs')
             ->first()['value'];
 
         return $results;

@@ -28,8 +28,6 @@ Route::resource('cart', SiteCartController::class)->names('cart');
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 #Admin Panel
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('categories', CategoryController::class)
@@ -52,9 +50,13 @@ Route::group(['prefix' => 'admin'], function () {
 
 /* AJAX requests */
 Route::post('/ajaxGetPrices', [AjaxController::class, 'ajaxGetPrices'])->name('ajaxGetPrices');
-Route::post('/ajaxAddProduct', [AjaxController::class, 'ajaxAddProduct'])->name('ajaxAddProduct');
-Route::post('/ajaxDecProduct', [AjaxController::class, 'ajaxDecProduct'])->name('ajaxDecProduct');
+Route::post('/changeProductQuantity', [AjaxController::class, 'changeProductQuantity'])->name('changeProductQuantity');
 
 
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/welcome', function () {
+//    return view('welcome');
+//});
 
 

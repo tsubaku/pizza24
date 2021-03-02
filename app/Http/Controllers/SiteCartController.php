@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Repositories\IndexRepository;
+use App\Repositories\SettingRepository;
+use Doctrine\DBAL\Schema\Index;
 use Illuminate\Http\Request;
 
 use App\Repositories\CartRepository;
 use App\Repositories\CategoryRepository;
+use Illuminate\Validation\Rules\In;
 
 class SiteCartController extends Controller
 {
@@ -21,12 +25,24 @@ class SiteCartController extends Controller
     private $categoryRepository;
 
     /**
+     * @var SettingRepository
+     */
+    private $settingRepository;
+
+    /**
+     * @var Index Repository
+     */
+    private $indexRepository;
+
+    /**
      * PostController constructor.
      */
     public function __construct()
     {
         $this->cartRepository = app(CartRepository::class);
         $this->categoryRepository = app(CategoryRepository::class);
+        $this->settingRepository = app(SettingRepository::class);
+        $this->indexRepository = app(IndexRepository::class);
     }
 
 
@@ -38,16 +54,25 @@ class SiteCartController extends Controller
     public function index(Request $request)
     {
         #Get session id from cookie.
-        $sessionName = session()->getName();
-        $sessionId = $request->cookie($sessionName);
-        $model = Cart::all();
-        $cartId = $this->cartRepository->getItemId('session_id', $sessionId, $model);
-        //
-        $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId);
+        $sessionId = $this->indexRepository->getSessionId($request);
+
+        $currencyName = $this->indexRepository->getCurrencyName($request);
+        $currencyLogo = $this->indexRepository->getCurrencyLogo($currencyName);
+        $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
+
+        $cartId = $this->cartRepository->getCartId($sessionId);
+
+        $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId, $currentExchangeRate);
         $categoryList = $this->categoryRepository->getForComboBox();
-        //$imgUrl = 'stoeage'. $paginator->product->image_url;
- //        dd($paginator);
-        return view('sitecarts.index', compact('paginator', 'categoryList'));
+
+        $deliveryCosts = $this->settingRepository->getDeliveryCosts($currentExchangeRate);
+        $total = (float)$paginator->reduce(function ($carry, $item) {
+            return round(($carry + $item->quantity * $item->product->price), 2);
+        });
+        $fullPrice = $total + $deliveryCosts;
+        //dd($request->getRequestUri(), $request, $paginator, $fullPrice);
+
+        return view('sitecarts.index', compact('paginator', 'categoryList', 'deliveryCosts', 'fullPrice', 'currencyLogo'));
     }
 
     /**

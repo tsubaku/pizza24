@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
 
-        Product::factory(20)->create();
+        Product::factory(50)->create();
         Cart::factory(15)->create();
         Cart_item::factory(13)->create();
         Order::factory(15)->create();

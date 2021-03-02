@@ -18,6 +18,11 @@ class SettingsTableSeeder extends Seeder
             'value' => 0.83
         ];
 
+        $data[] = [
+            'name' => 'delivery_costs',
+            'value' => 20
+        ];
+
         \DB::table('settings')->insert($data);
     }
 }

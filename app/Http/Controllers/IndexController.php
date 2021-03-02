@@ -13,35 +13,19 @@ use App\Repositories\SettingRepository;
 use App\Repositories\AjaxRepository;
 use App\Repositories\CartRepository;
 
-use Cookie;
+//use Cookie;
 
 class IndexController extends Controller
 {
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
     /**
      * @var CategoryRepository
      */
     private $categoryRepository;
 
     /**
-     * @var SettingRepository
-     */
-    private $settingRepository;
-
-    /**
      * @var IndexRepository
      */
     private $indexRepository;
-
-    /**
-     * @var AjaxRepository
-     */
-    private $ajaxRepository;
 
     /**
      * @var CartRepository
@@ -55,8 +39,6 @@ class IndexController extends Controller
     {
         $this->indexRepository = app(IndexRepository::class);
         $this->categoryRepository = app(CategoryRepository::class);
-        $this->settingRepository = app(SettingRepository::class);
-        $this->ajaxRepository = app(AjaxRepository::class);
         $this->cartRepository = app(CartRepository::class);
     }
 
@@ -69,38 +51,21 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        #Get session id from cookie. If not, then install from session
-        $sessionName = session()->getName();
-        $sessionId = $request->cookie($sessionName);
-        if (empty($sessionId)) {
-            $sessionId = session()->getId();
-            Cookie::queue($sessionName, $sessionId, 2628000);
-            Cookie::queue('currency', 'EUR', 2628000);
-        }
+        $sessionId = $this->indexRepository->getSessionId($request);
 
-        #Get exchange rate and currency designation for view
-        $currencyName = $request->cookie('currency');
-        if ($currencyName == 'USD') {
-            $exchangeRate = $this->settingRepository->getExchangeRate();
-            $currencyLogo = '$ ';
-        } else {
-            $exchangeRate = 1;
-            $currencyLogo = '€ ';
+        #Get price parameters
+        $currencyName = $this->indexRepository->getCurrencyName($request);
+        $currencyLogo = $this->indexRepository->getCurrencyLogo($currencyName);
+        $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
 
-        }
-
-        $cartId = $this->indexRepository->getItemId('session_id', $sessionId, Cart::all());
+        $cartId = $this->cartRepository->getCartId($sessionId);
 
         #Get data from models
         $selectedCategory = $request->category;
-        $paginator = $this->indexRepository->getWithPaginate(9, $selectedCategory, $exchangeRate, $cartId);
-        $categoryList = $this->categoryRepository->getForComboBox();
-        //$cart = $this->cartRepository->getCartItemsWithPaginate(10, $cartId);
+        $paginator = $this->indexRepository->getWithPaginate(9, $selectedCategory, $currentExchangeRate, $cartId);
+        $categoryList = $this->categoryRepository->getForComboBox(); //for Select options in layouts/header
+        //dd($request->url(),$request, $selectedCategory, $paginator);
 
-        //dd(Cookie::get(), $request->session(), session()->getId(), session()->getName());
-       // dd($paginator);
-
-
-        return view('index', compact('paginator', 'categoryList', 'currencyName', 'currencyLogo', 'sessionId', 'cartId'));
+        return view('index', compact('paginator', 'categoryList', 'currencyName', 'currencyLogo', 'sessionId', 'cartId', 'selectedCategory'));
     }
 }

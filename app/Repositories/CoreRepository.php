@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +16,14 @@ abstract class CoreRepository
 {
     const PICTURES_NOT_AVAILABLE = 'not-available.png';
     const USD_NAME_CURRENCY = 'USD';
+    const EUR_NAME_CURRENCY = 'EUR';
+
+    const NAME_COOKIE_SESSION = 'session';
+    const COOKIE_LIFE_TIME = 2628000; //5 year
+    const NAME_COOKIE_CURRENCY = 'currency';
+
+    const USD_LOGO_CURRENCY = '$ ';
+    const EUR_LOGO_CURRENCY = '€ ';
 
     /**
      * @var Model
@@ -67,14 +76,15 @@ abstract class CoreRepository
     }
 
     /**
-     * Get Cart id (if exist) or 0 (if not exist)
+     * Get the Cart id (if exist) or 0 (if not exist)
      *
      * @param  string $fieldName
      * @param  string $fieldValue
      * @param  Collection $model
      * @return int
      */
-    public function getItemId($fieldName, $fieldValue, $model)
+    /*
+    public function getCartId($fieldName, $fieldValue, $model)
     {
         $result = $model->where($fieldName, $fieldValue)->isNotEmpty();
         if ($result) {
@@ -85,5 +95,18 @@ abstract class CoreRepository
         }
         return $itemId;
     }
+    */
 
+    /**
+     * Get current exchange rate.
+     * @return mixed
+     */
+    public function getExchangeRate()
+    {
+        $results = Setting::select('value')
+            ->where('name', 'exchange_rate')
+            ->first()['value'];
+
+        return $results;
+    }
 }

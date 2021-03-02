@@ -5,6 +5,10 @@ namespace App\Repositories;
 use App\Models\Product as Model;
 use App\Models\Product;
 
+use Cookie;
+
+use Illuminate\Http\Request; //?
+
 
 class IndexRepository extends CoreRepository
 {
@@ -36,12 +40,11 @@ class IndexRepository extends CoreRepository
      * @param  int $selected
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getWithPaginate($perPage, $selected, $exchangeRate, $cartId )
+    public function getWithPaginate($perPage, $selected, $exchangeRate, $cartId)
     {
-
         #If a category is specified and it is NOT root, then the category is checked
         if ($selected <= 1) {
-            $checkType  = '<>';
+            $checkType = '<>';
             $selected = 0;
         } else {
             $checkType = '=';
@@ -64,6 +67,88 @@ class IndexRepository extends CoreRepository
             ->paginate($perPage);
 
         return $results;
+    }
+
+
+
+
+    ###############
+
+    /**
+     * Get session id from Cookie. If not, then install from session
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getSessionId($request)
+    {
+        $sessionId = $request->cookie(self::NAME_COOKIE_SESSION);
+        if (empty($sessionId)) {
+            $sessionId = $this->setSessionId();
+        }
+
+        return $sessionId;
+    }
+
+    /**
+     * Get Session id from session and set Cookies
+     *
+     * @return string
+     */
+    public function setSessionId()
+    {
+        $sessionId = session()->getId();
+        Cookie::queue(self::NAME_COOKIE_SESSION, $sessionId, self::COOKIE_LIFE_TIME);
+        Cookie::queue(self::NAME_COOKIE_CURRENCY, self::EUR_NAME_CURRENCY, self::COOKIE_LIFE_TIME);
+
+        return $sessionId;
+    }
+
+    /**
+     * Get Currency name from cookie
+     *
+     * @return string
+     */
+    public function getCurrencyName($request)
+    {
+        $currencyName = $request->cookie(self::NAME_COOKIE_CURRENCY);
+
+        return $currencyName;
+    }
+
+    /**
+     * Get logo currecy.
+     *
+     * @param string $currencyName
+     * @return string
+     */
+    public function getCurrencyLogo($currencyName)
+    {
+        if ($currencyName == self::USD_NAME_CURRENCY) {
+            $currencyLogo = self::USD_LOGO_CURRENCY;
+        } else {
+            $currencyLogo = self::EUR_LOGO_CURRENCY;
+        }
+
+        return $currencyLogo;
+    }
+
+
+    /**
+     * Get user exchange rate.
+     *
+     * @param string $currencyName
+     * @return int|mixed
+     */
+    public function getCurrentExchangeRate($currencyName)
+    {
+        if ($currencyName == self::USD_NAME_CURRENCY) {
+            $exchangeRate = $this->getExchangeRate();
+        } else {
+            $exchangeRate = 1;
+        }
+
+        return $exchangeRate;
     }
 
 }
