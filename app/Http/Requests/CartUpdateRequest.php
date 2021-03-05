@@ -13,7 +13,7 @@ class CartUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class CartUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' =>'required|string|max:100',
+            'email' =>'required|email',
+            'phone' =>'required|numeric|min:100000|max:9999999999',
+            'address' =>'required|string|min:6|max:300'
         ];
     }
 }

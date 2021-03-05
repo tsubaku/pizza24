@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CartUpdateRequest;
 use App\Models\Cart;
-use App\Repositories\IndexRepository;
-use App\Repositories\SettingRepository;
 use Doctrine\DBAL\Schema\Index;
 use Illuminate\Http\Request;
 
+use App\Repositories\IndexRepository;
+use App\Repositories\SettingRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\CategoryRepository;
 use Illuminate\Validation\Rules\In;
@@ -53,6 +54,8 @@ class SiteCartController extends Controller
      */
     public function index(Request $request)
     {
+        //dd($request);
+
         #Get session id from cookie.
         $sessionId = $this->indexRepository->getSessionId($request);
 
@@ -61,6 +64,7 @@ class SiteCartController extends Controller
         $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
 
         $cartId = $this->cartRepository->getCartId($sessionId);
+        $cart = $this->cartRepository->getEdit($cartId);
 
         $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId, $currentExchangeRate);
         $categoryList = $this->categoryRepository->getForComboBox();
@@ -70,9 +74,9 @@ class SiteCartController extends Controller
             return round(($carry + $item->quantity * $item->product->price), 2);
         });
         $fullPrice = $total + $deliveryCosts;
-        //dd($request->getRequestUri(), $request, $paginator, $fullPrice);
+        //dd($request->getRequestUri(), $request, $paginator, $fullPrice, $cart);
 
-        return view('sitecarts.index', compact('paginator', 'categoryList', 'deliveryCosts', 'fullPrice', 'currencyLogo'));
+        return view('sitecarts.index', compact('cart', 'paginator', 'categoryList', 'deliveryCosts', 'fullPrice', 'currencyLogo'));
     }
 
     /**
@@ -121,13 +125,37 @@ class SiteCartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Cart $cart
+     * @param  CartUpdateRequest $request
+     * @param  int $cartId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(CartUpdateRequest $request, $cartId)
     {
-        //
+
+        $cart = $this->cartRepository->getEdit($cartId);
+        if (empty($cart)) {
+            return back()
+                ->withErrors(['msg' => "Cart id=$cartId not found"])
+                ->withInput();
+        }
+
+        #working with a request
+        //$data = $request->all();
+        $data = $this->cartRepository->processRequest($request);
+
+        $saveResult = $cart->update($data);//writing in DB
+        //   dd($id, $saveResult, $data, $item, $request);
+
+        //$goTo = $this->cartRepository->redirectAfterSaveCart($saveResult, $cart);
+        //return $goTo;
+
+        //$part = ['part' => 2];
+        if ($saveResult) {
+            return redirect()->route('cart.index')
+                ->with(['success' => 'Saved successfully']);
+        } else {
+            return back()->withErrors(['msg' => 'Save error'])->withInput();
+        }
     }
 
     /**

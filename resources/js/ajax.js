@@ -103,7 +103,7 @@ $('.buttonDecProduct, .buttonAddProduct').click(function (e) {
     productId = nameProductId.replace(/\D/g, '');
     console.log('productId=' + productId);
 
-    if(nameProductId.includes('idAddButton')){
+    if (nameProductId.includes('idAddButton')) {
         action = 'increment';
     } else {
         action = 'decrement';
@@ -133,7 +133,7 @@ $('.buttonDecProduct, .buttonAddProduct').click(function (e) {
  * The function takes the price data, received from the server after changing the quantity of ordered goods and changes the old peices on the page to the new ones.
  * @param data
  */
-function setNewPricesOnPage(data){
+function setNewPricesOnPage(data) {
     //Index page
     var divCount = document.getElementById('divCount' + productId);
     if (divCount) {
@@ -167,4 +167,16 @@ function setNewPricesOnPage(data){
         }
     }
 }
+
+
+/**
+ * Navigation through the order panels in the shopping cart.
+ */
+$('.buttonPartControl').click(function (e) {
+    e.preventDefault();
+    //console.log('buttonPartControl');
+    $("#part1").slideToggle();
+    $("#part2").slideToggle();
+});
+
 

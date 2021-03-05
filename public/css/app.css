@@ -10026,3 +10026,12 @@ h3 {
 .disabled {
   pointer-events: none;
 }
+
+/*   */
+#part1 {
+  display: block;
+}
+
+#part2 {
+  display: none;
+}
