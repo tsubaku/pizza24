@@ -106,7 +106,6 @@ class CartRepository extends CoreRepository
         if ($result) {
             $cartId = $result->id;
         } else {
-            //$itemId = 0;
             $cartId = $this->setCartId($sessionId);
         }
         return $cartId;
@@ -125,7 +124,6 @@ class CartRepository extends CoreRepository
         ];
         $item = new Cart($data);
         $cartId = $item->save();
-        //$cartId = $item->id;
 
         return $cartId;
     }
@@ -185,6 +183,19 @@ class CartRepository extends CoreRepository
             }
         }
         return $newQuantity;
+    }
+
+    /**
+     *
+     * @param int $cartId
+     * @return mixed
+     */
+    public function deleteCartItems($cartId)
+    {
+        $cartItems = Cart_item::where('cart_id', $cartId)->forceDelete();
+
+
+        return $cartItems;
     }
 
 }

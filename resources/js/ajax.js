@@ -174,7 +174,13 @@ function setNewPricesOnPage(data) {
  */
 $('.buttonPartControl').click(function (e) {
     e.preventDefault();
-    //console.log('buttonPartControl');
+    console.log('buttonPartControl');
+
+    //if user is on the Order page, go to the Cart page
+    if (window.location.pathname  != '/cart') {
+        window.location.pathname = '/cart';
+    }
+
     $("#part1").slideToggle();
     $("#part2").slideToggle();
 });

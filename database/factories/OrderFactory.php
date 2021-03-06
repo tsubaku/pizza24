@@ -26,6 +26,7 @@ class OrderFactory extends Factory
         $session_id =  \Str::random(26);
         $user_id = $this->faker->unique($reset = true)->numberBetween(3, 19);
         $status = $this->faker->numberBetween(0, 3);
+        $currency = (rand(1, 4) == 4) ? "USD" : "EUR";
         $total = $this->faker->randomFloat(null, 5, 20);
         $name = $this->faker->name;
         $email = $this->faker->email;
@@ -38,6 +39,7 @@ class OrderFactory extends Factory
             'user_id' => $user_id,
             'status' => $status,
             'total' => $total,
+            'currency' => $currency,
             'name' => $name,
             'email' => $email,
             'phone' => $phone,

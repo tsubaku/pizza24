@@ -63,6 +63,7 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
+        //dd($request->input());
         // $data = $request->input();
         $data = $this->productRepository->processRequest($request);
 

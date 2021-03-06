@@ -36,9 +36,20 @@
                     </label>
                 </fieldset>
 
-                <button type="submit" id="buttonSubmit"
-                        class="btn btn-block btn-primary">Submit
-                </button>
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                        <button type="button" id="buttonBack"
+                                class="btn btn-block btn-primary buttonPartControl">Back
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" id="buttonSubmit"
+                                class="btn btn-block btn-primary">Next
+                        </button>
+                    </div>
+                </div>
 
             </form>
 
@@ -46,9 +57,7 @@
     </div>
 
 
-    <button type="button" id="buttonBack"
-            class="btn btn-block btn-primary buttonPartControl">Back
-    </button>
+
 
 
 

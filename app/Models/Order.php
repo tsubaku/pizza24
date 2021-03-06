@@ -21,6 +21,7 @@ class Order extends Model
         'session_id',
         'status',
         'total',
+        'currency',
         'name',
         'email',
         'phone',

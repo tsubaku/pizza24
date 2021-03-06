@@ -42,7 +42,7 @@ class SiteCartController extends Controller
     {
         $this->cartRepository = app(CartRepository::class);
         $this->categoryRepository = app(CategoryRepository::class);
-        $this->settingRepository = app(SettingRepository::class);
+            $this->settingRepository = app(SettingRepository::class);
         $this->indexRepository = app(IndexRepository::class);
     }
 
@@ -131,7 +131,6 @@ class SiteCartController extends Controller
      */
     public function update(CartUpdateRequest $request, $cartId)
     {
-
         $cart = $this->cartRepository->getEdit($cartId);
         if (empty($cart)) {
             return back()
@@ -139,19 +138,11 @@ class SiteCartController extends Controller
                 ->withInput();
         }
 
-        #working with a request
-        //$data = $request->all();
-        $data = $this->cartRepository->processRequest($request);
+        $data = $request->all();
+        $saveResult = $cart->update($data); //writing in DB
 
-        $saveResult = $cart->update($data);//writing in DB
-        //   dd($id, $saveResult, $data, $item, $request);
-
-        //$goTo = $this->cartRepository->redirectAfterSaveCart($saveResult, $cart);
-        //return $goTo;
-
-        //$part = ['part' => 2];
         if ($saveResult) {
-            return redirect()->route('cart.index')
+            return redirect()->route('order.create')
                 ->with(['success' => 'Saved successfully']);
         } else {
             return back()->withErrors(['msg' => 'Save error'])->withInput();

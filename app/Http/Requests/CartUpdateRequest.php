@@ -26,7 +26,7 @@ class CartUpdateRequest extends FormRequest
         return [
             'name' =>'required|string|max:100',
             'email' =>'required|email',
-            'phone' =>'required|numeric|min:100000|max:9999999999',
+            'phone' =>'required|string|max:30',
             'address' =>'required|string|min:6|max:300'
         ];
     }

@@ -43,8 +43,12 @@
                         </li>
                     @endempty
 
-                    <li class="nav-item px-3">
+                    <li class="nav-item px-1">
                         <a class="nav-link" href="{{ route('cart.index') }}">My Cart</a>
+                    </li>
+
+                    <li class="nav-item px-1">
+                        <a class="nav-link" href="{{ route('order.index') }}">My Orders</a>
                     </li>
 
                     <!-- Authentication Links -->

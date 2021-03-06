@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->id();
 
             $table->string('session_id');
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->smallInteger('status')->unsigned();
             $table->float('total');
+            $table->string('currency');
             $table->string('name');
             $table->string('email');
             $table->string('phone');

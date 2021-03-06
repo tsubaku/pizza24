@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\Cart_ItemController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\SiteCartController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('
 
 #Cart page
 Route::resource('cart', SiteCartController::class)->names('cart');
+
+#Orders page
+Route::resource('order', OrderController::class)->names('order');
 
 Auth::routes();
 
