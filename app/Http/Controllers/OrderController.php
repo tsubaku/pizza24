@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use App\Repositories\SettingRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CartRepository;
-use Cookie;
+
+//use Auth;
 
 class OrderController extends Controller
 {
@@ -56,13 +57,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $sessionId = $this->indexRepository->getSessionId($request);
-        $categoryList = $this->categoryRepository->getForComboBox();
-        $paginator = $this->orderRepository->getAllWithPaginate($sessionId, 10);
+        $isUser = auth()->user();
+        if (isset($isUser)) {
+            //$userId = Auth::id();
+            $userId = auth()->user()->id;
+            $paginator = $this->orderRepository->getAllWithPaginate($userId, 10);
+        } else {
+            $paginator = null;
+        }
 
-        return view('order.index', compact('categoryList', 'paginator'));
+        return view('order.index', compact('paginator'));
     }
 
     /**
@@ -73,7 +79,6 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        //dd($request);
         $sessionId = $this->indexRepository->getSessionId($request);
         $cartId = $this->cartRepository->getCartId($sessionId);
 
@@ -94,12 +99,8 @@ class OrderController extends Controller
         });
         $fullPrice = $total + $deliveryCosts;
 
-        $categoryList = $this->categoryRepository->getForComboBox();
-
-
         $dataOrder = [
             'user_id' => $cart->user_id,
-            'session_id' => $sessionId,
             'status' => '0',
             'total' => $fullPrice,
             'currency' => $currencyName,
@@ -111,8 +112,7 @@ class OrderController extends Controller
         ];
         $newOrder = new Order($dataOrder);
 
-        //  dd($costDeletedItems);
-        return view('order.create', compact('newOrder', 'dataOrder', 'categoryList'));
+        return view('order.create', compact('newOrder', 'dataOrder'));
 
     }
 
@@ -160,7 +160,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        dd('show');
+        //dd('show');
     }
 
     /**

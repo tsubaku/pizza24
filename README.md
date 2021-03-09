@@ -1,10 +1,10 @@
-###THE PIZZA TASK
+## THE PIZZA TASK
 
-###1. Task description
+## 1. Task description
 Let’s imagine you want to start a new pizza delivery business. Please create a small web application for online pizza ordering. The idea is to make a non-existing service where assumed clients can choose a pizza, put it into a cart and make an order.
 
 
-###2. Requirements
+## 2. Requirements
 ✔ The menu page should contain at least 8 pizzas
 
 ✔ Please add a currency switch so that the clients can change prices from dollars into euro and vice versa
@@ -20,7 +20,7 @@ name, surname, etc.) to get a confirmation that the order has been received
 
 ✔ Please, add a form validation for the login (password validation, e-mail validation, etc.)
 
-###Most frequent mistakes to avoid:
+## Most frequent mistakes to avoid:
 
 ✖ Cart loses items when you refresh the page
 
@@ -48,20 +48,20 @@ name, surname, etc.) to get a confirmation that the order has been received
 
 ✖ No readme file in repos
 
-###3. Technologies
+## 3. Technologies
 ✅ If you are seeking a frontend position, please use React as a frontend technology. Backend is up to your discretion.
 
 ✅ If you are seeking a backend position, please use Laravel as a backend technology. Frontend is up to your discretion.
 
 ✅ If you are seeking a full-stack position, it is preferably but not mandatory that you use Laravel/React stack.
 
-###4. Delivery format
+## 4. Delivery format
 ✅ Please provide a link to your repository (front and back) and a direct link to the deployed version of your application (e.g.
 on Heroku)
 
 ✅ Please provide a readme file for both repos
 
-###5. Resources
+## 5. Resources
 ✅ Deployment of the application: any free hosting platform (e.g. Heroku) or your own server
 
 ___

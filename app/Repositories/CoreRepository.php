@@ -75,27 +75,7 @@ abstract class CoreRepository
         return $data;
     }
 
-    /**
-     * Get the Cart id (if exist) or 0 (if not exist)
-     *
-     * @param  string $fieldName
-     * @param  string $fieldValue
-     * @param  Collection $model
-     * @return int
-     */
-    /*
-    public function getCartId($fieldName, $fieldValue, $model)
-    {
-        $result = $model->where($fieldName, $fieldValue)->isNotEmpty();
-        if ($result) {
-            $result = $model->where($fieldName, $fieldValue)->first();
-            $itemId = $result->id;
-        } else {
-            $itemId = 0;
-        }
-        return $itemId;
-    }
-    */
+
 
     /**
      * Get current exchange rate.

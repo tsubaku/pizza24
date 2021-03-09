@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+//use App\Models\Cart;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\Cookie;
+use App\Repositories\CartRepository;
 
 class RegisterController extends Controller
 {
@@ -32,6 +36,11 @@ class RegisterController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
+     * @var CartRepository
+     */
+    private $categoryRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -39,12 +48,14 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        $this->cartRepository = app(CartRepository::class);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -59,15 +70,26 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
-        return User::create([
+        $newUser = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        #Change user_id in the Cart table
+        $sessionId = Cookie::get('session');
+        $cartId = $this->cartRepository->getCartId($sessionId);
+        $cart = $this->cartRepository->getEdit($cartId);
+        if ($cartId) {
+            $cart->user_id = $newUser->id;
+            $cart->save();
+        }
+
+        return $newUser;
     }
 }

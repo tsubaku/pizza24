@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart_item;
+//use App\Models\Cart_item;
 use App\Repositories\CartRepository;
 use App\Repositories\IndexRepository;
 use Illuminate\Http\Request;
@@ -12,8 +12,9 @@ use App\Repositories\SettingRepository;
 use Cookie;
 //use Session;
 
-use App\Models\Cart;
-use Illuminate\Validation\Rules\In;
+//use App\Models\Cart;
+//use Illuminate\Validation\Rules\In;
+//use function PHPUnit\Framework\isEmpty;
 
 
 //use function PHPUnit\Framework\isNull;
@@ -129,6 +130,10 @@ class AjaxController extends Controller
 
         #Get Cart_id for this Session_id
         $cartId = $this->cartRepository->getCartId($sessionId);
+
+        if (empty($cartId)) {
+            $cartId = $this->cartRepository->setCartId($sessionId);
+        }
 
         #Add product to the Cart_item table
         $productId = $request->productId;

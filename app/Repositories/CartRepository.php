@@ -6,6 +6,7 @@ use App\Models\Cart as Model;
 
 use App\Models\Cart;
 use App\Models\Cart_item;
+use Auth;
 
 class CartRepository extends CoreRepository
 {
@@ -61,12 +62,12 @@ class CartRepository extends CoreRepository
         $results = Cart_item::orderBy('id', 'ASC')
             ->select($columns)
             ->where('cart_id', $cartId)
-            ->with([
-                'product' => function ($query) use ($currentExchangeRate) {
-                    $query
-                        ->select(['id', 'title', 'image_url', \DB::raw("ROUND((price / $currentExchangeRate),2) AS price")]);
-                }
-            ])
+             ->with([
+                 'product' => function ($query) use ($currentExchangeRate) {
+                     $query
+                         ->select(['id', 'title', 'image_url', \DB::raw("ROUND((price / $currentExchangeRate),2) AS price")]);
+                 }
+             ])
             ->paginate($perPage);
 
         return $results;
@@ -106,7 +107,7 @@ class CartRepository extends CoreRepository
         if ($result) {
             $cartId = $result->id;
         } else {
-            $cartId = $this->setCartId($sessionId);
+            $cartId = 0;
         }
         return $cartId;
     }
@@ -119,8 +120,14 @@ class CartRepository extends CoreRepository
      */
     public function setCartId($sessionId)
     {
+        if (Auth::check()) {
+            $userId = auth()->user()->id;
+        } else {
+            $userId = 0;
+        }
         $data = [
-            'session_id' => $sessionId
+            'session_id' => $sessionId,
+            'user_id' => $userId
         ];
         $item = new Cart($data);
         $cartId = $item->save();

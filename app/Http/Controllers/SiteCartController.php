@@ -11,7 +11,7 @@ use App\Repositories\IndexRepository;
 use App\Repositories\SettingRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\CategoryRepository;
-use Illuminate\Validation\Rules\In;
+//use Illuminate\Validation\Rules\In;
 
 class SiteCartController extends Controller
 {
@@ -42,7 +42,7 @@ class SiteCartController extends Controller
     {
         $this->cartRepository = app(CartRepository::class);
         $this->categoryRepository = app(CategoryRepository::class);
-            $this->settingRepository = app(SettingRepository::class);
+        $this->settingRepository = app(SettingRepository::class);
         $this->indexRepository = app(IndexRepository::class);
     }
 
@@ -54,20 +54,17 @@ class SiteCartController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request);
-
         #Get session id from cookie.
         $sessionId = $this->indexRepository->getSessionId($request);
+        $cartId = $this->cartRepository->getCartId($sessionId);
 
         $currencyName = $this->indexRepository->getCurrencyName($request);
         $currencyLogo = $this->indexRepository->getCurrencyLogo($currencyName);
         $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
 
-        $cartId = $this->cartRepository->getCartId($sessionId);
         $cart = $this->cartRepository->getEdit($cartId);
 
         $paginator = $this->cartRepository->getCartItemsWithPaginate(10, $cartId, $currentExchangeRate);
-        $categoryList = $this->categoryRepository->getForComboBox();
 
         $deliveryCosts = $this->settingRepository->getDeliveryCosts($currentExchangeRate);
         $total = (float)$paginator->reduce(function ($carry, $item) {
@@ -76,8 +73,9 @@ class SiteCartController extends Controller
         $fullPrice = $total + $deliveryCosts;
         //dd($request->getRequestUri(), $request, $paginator, $fullPrice, $cart);
 
-        return view('sitecarts.index', compact('cart', 'paginator', 'categoryList', 'deliveryCosts', 'fullPrice', 'currencyLogo'));
+        return view('sitecarts.index', compact('cart', 'paginator', 'deliveryCosts', 'fullPrice', 'currencyLogo'));
     }
+
 
     /**
      * Show the form for creating a new resource.

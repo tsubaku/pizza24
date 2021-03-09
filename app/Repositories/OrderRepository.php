@@ -4,14 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Order as Model;
 
-//use Illuminate\Database\Eloquent\Collection;
-//use Illuminate\Pagination\LengthAwarePaginator;
-//use PhpParser\Node\Expr\AssignOp\Concat;
-
-//use App\Http\Requests\OrderUpdateRequest;
-//use App\Http\Requests\OrderCreateRequest;
-use App\Models\Order;
-
 class OrderRepository extends CoreRepository
 {
     /**
@@ -40,14 +32,14 @@ class OrderRepository extends CoreRepository
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllWithPaginate($sessionId, $perPage = null)
+    public function getAllWithPaginate($userId, $perPage = null)
     {
-        $columns = ['id', 'user_id', 'session_id', 'status', 'total', 'currency', 'name', 'email', 'phone', 'address', 'created_at'];
+        $columns = ['id', 'user_id', 'status', 'total', 'currency', 'name', 'email', 'phone', 'address', 'created_at'];
         $results = $this
             ->startConditions()
             ->select($columns)
             ->orderBy('created_at', 'DESC')
-            ->where('session_id', $sessionId)
+            ->where('user_id', $userId)
             ->paginate($perPage);
 
         return $results;

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product as Model;
-use App\Models\Product;
+//use App\Models\Product;
 
 use Cookie;
 
@@ -38,6 +38,8 @@ class IndexRepository extends CoreRepository
      *
      * @param  int $perPage
      * @param  int $selected
+     * @param  float $exchangeRate
+     * @param  int $cartId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getWithPaginate($perPage, $selected, $exchangeRate, $cartId)

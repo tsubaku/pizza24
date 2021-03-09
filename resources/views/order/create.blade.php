@@ -19,9 +19,6 @@
                 <p>user_id: {{$dataOrder['user_id']}}
                     <small>(for debugging)</small>
                 </p>
-                <p>session_id: {{$dataOrder['session_id']}}
-                    <small>(for debugging)</small>
-                </p>
                 <p>status: {{$dataOrder['status']}}
                     <small>(for debugging)</small>
                 </p>
@@ -33,8 +30,6 @@
                     <div class="col-8">
                         <input name="user_id" value="{{$dataOrder['user_id']}}"
                                id="user_id" type="hidden">
-                        <input name="session_id" value="{{$dataOrder['session_id']}}"
-                               id="session_id" type="hidden">
                         <input name="status" value="{{$dataOrder['status']}}"
                                id="status" type="hidden">
                         <input name="total" value="{{$dataOrder['total']}}"

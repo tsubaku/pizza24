@@ -30,7 +30,7 @@
                         </select>
                     </li>
 
-                    @empty($deliveryCosts)
+                    @isset($categoryList)
                         <li class="nav-item px-3 ">
                             <select id="selectCategory" class="custom-select ">
                                 @foreach($categoryList as $category)
@@ -41,7 +41,7 @@
                                 @endforeach
                             </select>
                         </li>
-                    @endempty
+                    @endisset
 
                     <li class="nav-item px-1">
                         <a class="nav-link" href="{{ route('cart.index') }}">My Cart</a>
