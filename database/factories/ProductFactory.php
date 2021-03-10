@@ -21,13 +21,12 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->unique()->words(rand(1, 3), true); //sentence - предложение (3-8 слов)
-        //$title = $this->faker->asciify('gfshfksjfhaaeee'); //sentence - предложение (3-8 слов)
+        $sentence = $this->faker->unique()->sentence(rand(1, 3), true);
+        $title = substr($sentence, 0, -1);
         $category_id = rand(2, 4);
-        $description = $this->faker->realText(rand(100, 300)); //realText - текст 1000-3000 символов
-        $is_published = rand(1, 5) > 1;//1 из 5 неопубликован
+        $description = $this->faker->realText(rand(100, 300));
+        $is_published = rand(1, 5) > 1;
         $price = $this->faker->randomFloat(null, 5, 20);
-        $image_url = 'not-available.png';
 
         return [
             'title' => $title,
@@ -35,7 +34,7 @@ class ProductFactory extends Factory
             'category_id' => $category_id,
             'description' => $description,
             'price' => $price,
-            'image_url' => $image_url,
+            'image_url' => '',
             'is_published' => $is_published
         ];
     }

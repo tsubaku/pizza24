@@ -25,7 +25,7 @@
                             <th>Image</th>
                             <th>Title</th>
                             <th>Category</th>
-                            <th>Published</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,14 +34,14 @@
                             <tr {{ $product->is_published ? '' : 'class=td-draft'}} >
                                 <th>{{$product->id}}</th>
                                 <td>
-                                    <img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="Product image">
+                                    <img class="img-thumbnail" src="{{asset("storage/$product->ImageUrlPrepared")}}"
+                                         alt="Product image">
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.products.edit', $product->id) }}">{{$product->title}}</a>
+                                    <a href="{{ route('admin.products.edit', $product->slug) }}">{{$product->title}}</a>
                                 </td>
                                 <td>{{$product->category->title}}</td>
                                 <td>{{$product->is_published ? 'Published' : 'Draft' }}</td>
-
                             </tr>
                         @endforeach
                         </tbody>

@@ -7,7 +7,7 @@
         <div class="card">
 
             <div class="card-header">
-                {{$item->is_published ? 'Published' : 'Draft' }}
+                Status: <span class="font-weight-bold">{{$item->is_published ? 'Published' : 'Draft' }}</span>
             </div>
 
             <div class="card-body">
@@ -56,7 +56,7 @@
 
                     <div class="form-group">
                         <label for="image">Select product image</label>
-                        <input name="image" value="{{ old('image_url', $item->image_url) }}"
+                        <input name="image" value="{{ old('ImageUrl', $item->ImageUrlPrepared) }}"
                                id="image" type="file" class="form-control">
                     </div>
 

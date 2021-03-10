@@ -19,7 +19,7 @@ class CategoriesTableSeeder extends Seeder
             'slug' => \Str::slug($categoryName),
             'parent_id' => 1,
             'description' => 'Root category',
-            'image_url' => 'not-available.png'
+            'image_url' => ''
         ];
 
         $categoryName = 'Pizza';
@@ -28,7 +28,7 @@ class CategoriesTableSeeder extends Seeder
             'slug' => \Str::slug($categoryName),
             'parent_id' => 1,
             'description' => 'All pizzas in our store',
-            'image_url' => 'not-available.png'
+            'image_url' => ''
         ];
 
         $categoryName = 'Pizza sauce';
@@ -37,7 +37,7 @@ class CategoriesTableSeeder extends Seeder
             'slug' => \Str::slug($categoryName),
             'parent_id' => 2,
             'description' => 'All pizza sauces in our store',
-            'image_url' => 'not-available.png'
+            'image_url' => ''
         ];
 
         $categoryName = 'Sushi';
@@ -46,7 +46,7 @@ class CategoriesTableSeeder extends Seeder
             'slug' => \Str::slug($categoryName),
             'parent_id' => 1,
             'description' => 'All sushi in our store',
-            'image_url' => 'not-available.png'
+            'image_url' => ''
         ];
 
         \DB::table('categories')->insert($data);

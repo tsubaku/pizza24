@@ -29,6 +29,17 @@ class CategoryRepository extends CoreRepository
         return $this->startConditions()->find($id);
     }
 
+    /**
+     * Get a model for editing on the field "slug" in the admin panel
+     *
+     * @param string $slug
+     * @return Model
+     */
+    public function getEditSlug($slug)
+    {
+        return $this->startConditions()->where('slug', $slug)->first();
+    }
+
 
     /**
      * Get categories for display by paginator
@@ -38,7 +49,7 @@ class CategoryRepository extends CoreRepository
      */
     public function getAllWithPaginate($perPage = null)
     {
-        $columns = ['id', 'title', 'parent_id', 'image_url'];
+        $columns = ['id', 'title', 'slug', 'parent_id', 'image_url'];
         $results = $this
             ->startConditions()
             ->select($columns)
@@ -81,7 +92,7 @@ class CategoryRepository extends CoreRepository
     public function redirectAfterSaveCategory($saveResult, $item)
     {
         if ($saveResult) {
-            return redirect()->route('admin.categories.edit', $item->id)
+            return redirect()->route('admin.categories.edit', $item->slug)
                 ->with(['success' => 'Saved successfully']);
         } else {
             return back()->withErrors(['msg' => 'Save error'])->withInput();

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -21,9 +21,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $image_url
  * @property boolean $is_published
  */
-class Product extends Model
+class Product extends BaseModel
 {
-    use HasFactory;
+    //use HasFactory;
     use SoftDeletes;
 
     /**
@@ -60,6 +60,7 @@ class Product extends Model
     {
         return $this->hasOne(Cart_item::class);
     }
+
 
 
 }

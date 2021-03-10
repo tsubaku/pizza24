@@ -35,10 +35,10 @@
                             <tr>
                                 <th>{{$item->id}}</th>
                                 <td>
-                                    <img class="img-thumbnail" src="{{asset("storage/$item->image_url")}}" alt="">
+                                    <img class="img-thumbnail" src="{{asset("storage/$item->ImageUrlPrepared")}}" alt="">
                                 </td>
                                 <td>
-                                    <a href="{{  route('admin.categories.edit', $item->id) }}">{{$item->title}}</a>
+                                    <a href="{{  route('admin.categories.edit', $item->slug) }}">{{$item->title}}</a>
                                 </td>
 
                                 <td {{ ($item->parent_id == 1) ? 'class=root-color' : ''}} >

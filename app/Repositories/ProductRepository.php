@@ -24,7 +24,7 @@ class ProductRepository extends CoreRepository
     }
 
     /**
-     * Get a model for editing in the admin panel
+     * Get a model for editing on the "id" in the admin panel
      *
      * @param int $id
      * @return Model
@@ -33,6 +33,20 @@ class ProductRepository extends CoreRepository
     {
         return $this->startConditions()->find($id);
     }
+
+
+    /**
+     * Get a model for editing on the field "slug" in the admin panel
+     *
+     * @param string $slug
+     * @return Model
+     */
+    public function getEditSlug($slug)
+    {
+        return $this->startConditions()->where('slug', $slug)->first();
+    }
+
+
 
 
     /**
@@ -73,13 +87,12 @@ class ProductRepository extends CoreRepository
     public function redirectAfterSaveProduct($saveResult, $item)
     {
         if ($saveResult) {
-            return redirect()->route('admin.products.edit', $item->id)
+            return redirect()->route('admin.products.edit', $item->slug)
                 ->with(['success' => 'Saved successfully']);
         } else {
             return back()->withErrors(['msg' => 'Save error'])->withInput();
         }
     }
-
 
 
 }

@@ -8,7 +8,7 @@
     @include('admin.layouts.result_messages')
 
     @if($item->exists)
-        <form method="post" action="{{ route('admin.categories.update', $item->id) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('admin.categories.update', $item->slug) }}" enctype="multipart/form-data">
             @method('PATCH')
             @else
                 <form method="post" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
@@ -26,7 +26,7 @@
                 </form>
 
                 @if($item->exists)
-                    <form method="post" action="{{ route('admin.categories.destroy', $item->id) }}">
+                    <form method="post" action="{{ route('admin.categories.destroy', $item->slug) }}">
                         @method('DELETE')
                         @csrf
                         <div class="row justify-content-center">

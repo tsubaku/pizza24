@@ -19,7 +19,7 @@
     <div class="card-body">
 
         <div class="form-group">
-            <img class="img-thumbnail" src="{{asset("storage/$item->image_url")}}" alt="">
+            <img class="img-thumbnail" src="{{asset("storage/$item->ImageUrlPrepared")}}" alt="">
         </div>
 
     </div>

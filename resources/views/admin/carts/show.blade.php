@@ -35,7 +35,7 @@
                                 <tr>
                                     <th>{{$item->id}}</th>
                                     <td>
-                                        <img class="img-thumbnail" src="{{asset("storage/".$item->product->image_url)}}"
+                                        <img class="img-thumbnail" src="{{asset("storage/".$item->product->ImageUrlPrepared)}}"
                                              alt="Product image">
                                     </td>
                                     <td>{{$item->product_id}}</td>

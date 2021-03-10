@@ -34,7 +34,7 @@
                                 <div class="divPrice d-inline" id="idPrice{{$product->id}}"> {{$product->price}} </div>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li><img class="img-thumbnail" src="{{asset("storage/$product->image_url")}}" alt="">
+                                <li><img class="img-thumbnail" src="{{asset("storage/$product->ImageUrlPrepared")}}" alt="">
                                 </li>
                                 <li>{{$product->description}}</li>
                             </ul>

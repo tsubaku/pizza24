@@ -35,8 +35,8 @@ abstract class CoreRepository
      */
     public function __construct()
     {
-        $this->model = app($this->getModelClass()); //creation through the service provider.
-        //$this->model = new $this->getModelClass(); //analogue.
+        $this->model = app($this->getModelClass());  //creation through the service provider.
+        //$this->model = new $this->getModelClass(); //analog.
     }
 
 
@@ -68,8 +68,6 @@ abstract class CoreRepository
                 'public', $newFileName
             );
             $data['image_url'] = $newFileName;
-        } else {
-            $data['image_url'] = $this::PICTURES_NOT_AVAILABLE;
         }
 
         return $data;
@@ -89,4 +87,6 @@ abstract class CoreRepository
 
         return $results;
     }
+
+
 }

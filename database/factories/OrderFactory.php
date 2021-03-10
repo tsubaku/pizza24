@@ -22,8 +22,6 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-
-        //$session_id =  \Str::random(26);
         $user_id = $this->faker->unique($reset = true)->numberBetween(3, 19);
         $status = $this->faker->numberBetween(0, 3);
         $currency = (rand(1, 4) == 4) ? "USD" : "EUR";
@@ -34,7 +32,6 @@ class OrderFactory extends Factory
         $address = $this->faker->address;
 
         return [
-           // 'session_id' => $session_id,
             'user_id' => $user_id,
             'status' => $status,
             'total' => $total,

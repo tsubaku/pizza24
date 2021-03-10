@@ -95,12 +95,12 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $item = $this->categoryRepository->getEdit($id);
+        $item = $this->categoryRepository->getEditSlug($slug);
         if (empty($item)) {
             abort(404);
         }
@@ -113,32 +113,23 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  CategoryUpdateRequest $request
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdateRequest $request, $id)
+    public function update(CategoryUpdateRequest $request, $slug)
     {
-        $item = $this->categoryRepository->getEdit($id);
+        $item = $this->categoryRepository->getEditSlug($slug);
+        $title = $item->title;
+
         if (empty($item)) {
             return back()
-                ->withErrors(['msg' => "Category id=$id not found"])
+                ->withErrors(['msg' => "Category `$title` not found"])
                 ->withInput();
         }
-        //$data = $request->all();
+
         $data = $this->categoryRepository->processRequest($request);
-
-        #working with a request
-        if ($request->hasFile('image')) {
-            $newFileName = time() . '-' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs(
-                'public', $newFileName
-            );
-            $data['image_url'] = $newFileName;
-        }
-
-        $saveResult = $item
-            ->fill($data)
-            ->save();       //writing in DB
+        $saveResult = $item->update($data);             //writing in DB
+        //$saveResult = $item->fill($data)->save();     //analog
 
         $goTo = $this->categoryRepository->redirectAfterSaveCategory($saveResult, $item);
 
@@ -149,27 +140,30 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         //Soft removal, remains in the database
         //$result = Category::destroy($id);//в $result попадёт кол-во удалённых записей
 
         //Complete removal from the database
-        $item = $this->categoryRepository->getEdit($id);
+        $item = $this->categoryRepository->getEditSlug($slug);
+        $title = $item->title;
+
+        #Delete image from disk
         if ($item->image_url) {
             Storage::delete('public/' . $item->image_url);
         }
-        $result = Category::find($id)->forceDelete();
+        //$result = Category::find($id)->forceDelete();
+        $result = $item->forceDelete();
 
-
-
+        #Redirect
         if ($result) {
             return redirect()
                 ->route('admin.categories.index')
-                ->with(['success' => "Category $id has been removed."]);
+                ->with(['success' => "Category `$title` has been removed"]);
         } else {
             return back()->withErrors(['msg' => 'Delete error']);
         }

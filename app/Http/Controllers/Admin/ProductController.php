@@ -90,12 +90,14 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $item = $this->productRepository->getEdit($id);
+     //   $item = $this->productRepository->getEdit($id);
+        $item = $this->productRepository->getEditSlug($slug);
+  //      dd($item);
         if (empty($item)) {
             abort(404);
         }
@@ -108,24 +110,24 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  ProductUpdateRequest $request
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductUpdateRequest $request, $id)
+    public function update(ProductUpdateRequest $request, $slug)
     {
-        $item = $this->productRepository->getEdit($id);
+        $item = $this->productRepository->getEditSlug($slug);
+        $title = $item->title;
         if (empty($item)) {
             return back()
-                ->withErrors(['msg' => "Product id=$id not found"])
+                ->withErrors(['msg' => "Product `$title` not found"])
                 ->withInput();
         }
 
-        #working with a request
-        //$data = $request->all();
         $data = $this->productRepository->processRequest($request);
+        $saveResult = $item->update($data);             //writing in DB
+        //$saveResult = $item->fill($data)->save();     //analog
 
-        $saveResult = $item->update($data);//writing in DB
-     //   dd($id, $saveResult, $data, $item, $request);
+        //dd($id, $saveResult, $data, $item, $request);
         $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
 
         return $goTo;
@@ -134,27 +136,31 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-
-        //Soft delete
+        #Soft delete
         //$result = Product::destroy($id); //$result will contain the number of deleted records
 
-        //Full delete
-        $item = $this->productRepository->getEdit($id);
+        #Full delete
+        $item = $this->productRepository->getEditSlug($slug);
+        $title = $item->title;
+
+        #Delete image from disk
         if ($item->image_url) {
             Storage::delete('public/' . $item->image_url);
         }
-        $result = Product::find($id)->forceDelete();
+        //$result = Product::find($id)->forceDelete();
+        $result = $item->forceDelete();
+        //$result = $this->productRepository->deleteProduct($item);
 
-
+        #Redirect
         if ($result) {
             return redirect()
                 ->route('admin.products.index')
-                ->with(['success' => "Product $id was deleted"]);
+                ->with(['success' => "Product `$title` has been removed"]);
         } else {
             return back()->withErrors(['msg' => 'Delete error']);
         }

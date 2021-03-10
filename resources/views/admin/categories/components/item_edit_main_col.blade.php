@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label for="image">Select category image</label>
-                <input name="image" value="{{ old('image_url', $item->image_url) }}"
+                <input name="image" value="{{ old('ImageUrl', $item->ImageUrlPrepared) }}"
                        id="image" type="file" class="form-control">
             </div>
 
