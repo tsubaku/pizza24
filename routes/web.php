@@ -33,7 +33,7 @@ Route::resource('order', OrderController::class)->names('order');
 Auth::routes();
 
 #Admin Panel
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth', 'isadmin'], 'prefix' => 'admin'], function () {
     Route::resource('categories', CategoryController::class)
         ->names('admin.categories');
 

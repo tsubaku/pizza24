@@ -9,6 +9,7 @@ use App\Repositories\CategoryRepository;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Requests\CategoryCreateRequest;
 
+use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -20,11 +21,17 @@ class CategoryController extends Controller
     private $categoryRepository;
 
     /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    /**
      * CategoryController constructor.
      */
     public function __construct()
     {
         $this->categoryRepository = app(CategoryRepository::class);
+        $this->productRepository = app(ProductRepository::class);
     }
 
     /**
@@ -145,27 +152,31 @@ class CategoryController extends Controller
      */
     public function destroy($slug)
     {
-        //Soft removal, remains in the database
-        //$result = Category::destroy($id);//в $result попадёт кол-во удалённых записей
-
-        //Complete removal from the database
         $item = $this->categoryRepository->getEditSlug($slug);
         $title = $item->title;
 
-        #Delete image from disk
-        if ($item->image_url) {
-            Storage::delete('public/' . $item->image_url);
-        }
-        //$result = Category::find($id)->forceDelete();
-        $result = $item->forceDelete();
+        try {
+            //Soft removal, remains in the database
+            //$result = Category::destroy($id); //$result - count of deleted records
 
-        #Redirect
-        if ($result) {
-            return redirect()
-                ->route('admin.categories.index')
-                ->with(['success' => "Category `$title` has been removed"]);
-        } else {
-            return back()->withErrors(['msg' => 'Delete error']);
+            //$result = Category::find($id)->forceDelete();
+            $result = $item->forceDelete(); //Complete removal from the database
+
+            #Delete image from disk
+            if ($item->image_url) {
+                Storage::delete('public/' . $item->image_url);
+            }
+        } catch (\Exception  $e) {
+            #Get names of sub items
+            $subCategoryNames = $this->categoryRepository->getSubCategoriesNames($item->id);
+            $subProductNames = $this->productRepository->getSubProductsNames($item->id);
+            $subItemNames = array_merge($subCategoryNames, $subProductNames);
+
+            return back()->withErrors(['msg' => $subItemNames]);
         }
+
+        return redirect()
+            ->route('admin.categories.index')
+            ->with(['success' => "Category `$title` has been removed"]);
     }
 }

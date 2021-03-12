@@ -95,4 +95,40 @@ class ProductRepository extends CoreRepository
     }
 
 
+
+    /**
+     * Get all products in a specified category
+     *
+     * @param $parentId
+     * @return mixed
+     */
+    public function getSubProducts($parentId)
+    {
+        $columns = ['title'];
+        $results = $this
+            ->startConditions()
+            ->select($columns)
+            ->where('category_id', $parentId)
+            ->get();
+
+        return $results;
+    }
+
+    /**
+     * To form an array of product names
+     *
+     * @param $parentId
+     * @return array
+     */
+    public function getSubProductsNames($parentId)
+    {
+        $subProducts = $this->getSubProducts($parentId);
+        $subItemNames[] = '⚡️ PRODUCTS:';
+        foreach ($subProducts as $subProduct) {
+            $subItemNames[] = $subProduct->title;
+        }
+
+        return $subItemNames;
+    }
+
 }

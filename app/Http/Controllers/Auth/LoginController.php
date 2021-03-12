@@ -44,23 +44,35 @@ class LoginController extends Controller
 
     /**
      * The user has been authenticated.
+     *
      * (Overridden method)
+     * Check if the cookie in the browser matches the cookie in the Cart table.
+     * If it does not match, then replace the cookie in the Cart.
      *
      * @return mixed
      */
     protected function authenticated()
     {
+        #Get Cart
         $sessionId = Cookie::get('session');
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id', $userId)->first();
-        if ($cart->session_id != $sessionId) {
 
-            #Delete cart for non authorized user
-            Cart::where('session_id', $sessionId)->forceDelete();
-
-            #Update session_if for Authorize user
-            $cart->session_id = $sessionId;
-            $cart->save();
+        if (isset($cart)) {
+            if ($cart->session_id != $sessionId) {
+                #Update session_if for Authorize user
+                $cart->session_id = $sessionId;
+                $cart->save();
+            }
+        } else {
+            $cart = Cart::where('session_id', $sessionId)->first();
+            if (isset($cart)) {
+                #Update user_id for Authorize user
+                $cart->user_id = $userId;
+                $cart->update();
+            }
         }
+
+        return redirect('/admin/products');
     }
 }

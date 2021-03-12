@@ -130,7 +130,8 @@ class CartRepository extends CoreRepository
             'user_id' => $userId
         ];
         $item = new Cart($data);
-        $cartId = $item->save();
+        $saveResult = $item->save();
+        $cartId = $item->id;
 
         return $cartId;
     }
@@ -200,7 +201,6 @@ class CartRepository extends CoreRepository
     public function deleteCartItems($cartId)
     {
         $cartItems = Cart_item::where('cart_id', $cartId)->forceDelete();
-
 
         return $cartItems;
     }

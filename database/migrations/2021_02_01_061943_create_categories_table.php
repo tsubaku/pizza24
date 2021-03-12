@@ -18,13 +18,16 @@ class CreateCategoriesTable extends Migration
 
             $table->string('title');
             $table->string('slug')->unique();
-            $table->bigInteger('parent_id')->unsigned()->default(1);
+            $table->bigInteger('parent_id')->nullable()->unsigned()->default(1);
             $table->text('description')->nullable();
             $table->string('image_url')->nullable();
 
             $table->timestamps();
 
             $table->softDeletes();
+
+            $table->foreign('parent_id')
+                ->references('id')->on('categories')->cascadeOnUpdate()->restrictOnDelete();
         });
     }
 

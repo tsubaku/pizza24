@@ -4,10 +4,9 @@
             <a class="navbar-brand mr-4" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <a class="navbar-brand mr-4" href="{{ url('/admin/settings') }}">
+            <span class="lead mr-4">
                 Admin panel
-            </a>
-
+            </span>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -18,7 +17,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
                     <a class="p-2 text-dark" href="{{ route('admin.categories.index') }}">Categories</a>
                     <a class="p-2 text-dark" href="{{ route('admin.products.index') }}">Product</a>
                     <a class="p-2 text-dark" href="{{ route('admin.settings.index') }}">Settings</a>
