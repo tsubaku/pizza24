@@ -11,7 +11,6 @@ use App\Repositories\SettingRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CartRepository;
 
-//use Auth;
 
 class OrderController extends Controller
 {

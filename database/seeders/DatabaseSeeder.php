@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Cart;
-use App\Models\Cart_item;
-use App\Models\Order_item;
+use App\Models\CartItem;
+use App\Models\OrderItem;
 use App\Models\Order;
 
 class DatabaseSeeder extends Seeder
@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
 
         Product::factory(50)->create();
         Cart::factory(15)->create();
-        Cart_item::factory(13)->create();
+        CartItem::factory(13)->create();
         Order::factory(15)->create();
-        Order_item::factory(15)->create();
+        OrderItem::factory(15)->create();
 
     }
 }

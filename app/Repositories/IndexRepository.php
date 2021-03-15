@@ -62,7 +62,7 @@ class IndexRepository extends CoreRepository
             ->orderBy('id', 'ASC')
             ->with([
                 'category:id,title',//we will refer to the category relation
-                'cart_item' => function ($query) use ($cartId) {
+                'cartItem' => function ($query) use ($cartId) {
                     $query->where('cart_id', $cartId)->select(['product_id', 'quantity']);
                 }
             ])

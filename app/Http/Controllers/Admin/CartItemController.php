@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart_item;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 
 
-class Cart_itemController extends Controller
+class CartItemController extends Controller
 {
 
 
@@ -46,7 +46,7 @@ class Cart_itemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cart_item $cart_item
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,10 +57,10 @@ class Cart_itemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cart_item $cart_item
+     * @param  \App\Models\CartItem $cartItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cart_item $cart_item)
+    public function edit(CartItem $cartItem)
     {
         //
     }
@@ -69,10 +69,10 @@ class Cart_itemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Cart_item $cart_item
+     * @param  \App\Models\CartItem $cartItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart_item $cart_item)
+    public function update(Request $request, CartItem $cartItem)
     {
         //
     }
@@ -80,16 +80,16 @@ class Cart_itemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cart_item $cart_item
+     * @param  \App\Models\CartItem $cartItem
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //Soft delete
-        //$result = Cart_item::destroy($id); //$result will contain the number of deleted records
+        //$result = CartItem::destroy($id); //$result will contain the number of deleted records
 
         //Full delete
-        $result = Cart_item::find($id)->forceDelete();
+        $result = CartItem::find($id)->forceDelete();
 
         if ($result) {
             return back()->with(['success' => "Cart item $id was deleted"]);

@@ -120,12 +120,13 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  CategoryUpdateRequest $request
-     * @param  string $slug
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdateRequest $request, $slug)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        $item = $this->categoryRepository->getEditSlug($slug);
+        //$item = $this->categoryRepository->getEditSlug($slug);
+        $item = $this->categoryRepository->getEdit($id);
         $title = $item->title;
 
         if (empty($item)) {
@@ -157,10 +158,10 @@ class CategoryController extends Controller
 
         try {
             //Soft removal, remains in the database
-            //$result = Category::destroy($id); //$result - count of deleted records
+            //Category::destroy($id); //$result - count of deleted records
 
             //$result = Category::find($id)->forceDelete();
-            $result = $item->forceDelete(); //Complete removal from the database
+            $item->forceDelete(); //Complete removal from the database
 
             #Delete image from disk
             if ($item->image_url) {

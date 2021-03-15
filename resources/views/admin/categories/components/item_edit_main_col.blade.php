@@ -11,7 +11,7 @@
             <div class="tab-pane active" id="maindata" role="tabpanel">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input name="title" value="{{ $item->title }}"
+                    <input name="title" value="{{ old('title', $item->title)  }}"
                            id="title" type="text" class="form-control" minlenght="3" required
                     >
                 </div>
@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label for="slug">Slug</label>
-                <input name="slug" value="{{ $item->slug }}"
+                <input name="slug" value="{{ old('slug', $item->slug) }}"
                        id="slug" type="text" class="form-control"
                 >
             </div>

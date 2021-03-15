@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class CoreRepository

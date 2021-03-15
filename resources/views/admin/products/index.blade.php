@@ -29,19 +29,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($paginator as $product)
-                            @php /** @var \App\Models\Product $product */ @endphp
-                            <tr {{ $product->is_published ? '' : 'class=td-draft'}} >
-                                <th>{{$product->id}}</th>
+                        @foreach($paginator as $item)
+                            @php /** @var \App\Models\Product $item */ @endphp
+                            <tr {{ $item->is_published ? '' : 'class=td-draft'}} >
+                                <th>{{$item->id}}</th>
                                 <td>
-                                    <img class="img-thumbnail" src="{{asset("storage/$product->ImageUrlPrepared")}}"
+                                    <img class="img-thumbnail" src="{{asset("storage/$item->ImageUrlPrepared")}}"
                                          alt="Product image">
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.products.edit', $product->slug) }}">{{$product->title}}</a>
+                                    <a href="{{ route('admin.products.edit', $item->slug) }}">{{$item->title}}</a>
                                 </td>
-                                <td>{{$product->category->title}}</td>
-                                <td>{{$product->is_published ? 'Published' : 'Draft' }}</td>
+                                <td>{{$item->category->title}}</td>
+                                <td>{{$item->is_published ? 'Published' : 'Draft' }}</td>
                             </tr>
                         @endforeach
                         </tbody>

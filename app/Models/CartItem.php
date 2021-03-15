@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cart_item extends BaseModel
+class CartItem extends BaseModel
 {
-    //use HasFactory;
     use SoftDeletes;
     /**
      * The attributes that are mass assignable.
@@ -28,7 +25,7 @@ class Cart_item extends BaseModel
      */
     public function product()
     {
-        //The cart_item belongs to the product
+        //The cartItem belongs to the product
         return $this->belongsTo(Product::class);
     }
 
@@ -39,7 +36,7 @@ class Cart_item extends BaseModel
      */
     public function cart()
     {
-        //The cart_item belongs to the user
+        //The cartItem belongs to the Cart
         return $this->belongsTo(Cart::class);
     }
 

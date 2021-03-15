@@ -9,7 +9,7 @@
         @include('admin.layouts.result_messages')
 
         @if($item->exists)
-            <form method="post" action="{{ route('admin.products.update', $item->slug) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin.products.update', $item->id) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @else
                     <form method="post" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">

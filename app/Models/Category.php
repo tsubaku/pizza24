@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends BaseModel
 {
-   // use HasFactory;
     use SoftDeletes;
 
     /**
@@ -27,7 +24,7 @@ class Category extends BaseModel
     /**
      * Get parent category
      *
-     * @return Category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parentCategory()
     {

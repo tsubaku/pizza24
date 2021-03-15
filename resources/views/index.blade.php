@@ -41,7 +41,7 @@
                             <button type="button" id="idAddButton{{$product->id}}"
                                     class="buttonAddProduct btn btn-lg btn-block btn-primary">Add to cart
                                 <div id="divCount{{$product->id}}">
-                                    {{$product->cart_item ? '(' . $product->cart_item->quantity . ' pieces)' : '' }}
+                                    {{$product->cartItem ? '(' . $product->cartItem->quantity . ' pieces)' : '' }}
                                 </div>
                             </button>
                         </div>

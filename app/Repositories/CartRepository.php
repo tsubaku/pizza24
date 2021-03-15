@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Cart as Model;
 
 use App\Models\Cart;
-use App\Models\Cart_item;
+use App\Models\CartItem;
 use Auth;
 
 class CartRepository extends CoreRepository
@@ -44,7 +44,7 @@ class CartRepository extends CoreRepository
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'ASC')
-            ->with(['cart_item', 'user:id,name'])//Add a relay for the specified fields to reduce the number of requests
+            ->with(['cartItem', 'user:id,name'])//Add a relay for the specified fields to reduce the number of requests
             ->paginate($perPage);
 
         return $results;
@@ -59,7 +59,7 @@ class CartRepository extends CoreRepository
     public function getCartItemsWithPaginate($perPage, $cartId, $currentExchangeRate = 1)
     {
         $columns = ['id', 'product_id', 'cart_id', 'quantity'];
-        $results = Cart_item::orderBy('id', 'ASC')
+        $results = CartItem::orderBy('id', 'ASC')
             ->select($columns)
             ->where('cart_id', $cartId)
              ->with([
@@ -130,14 +130,14 @@ class CartRepository extends CoreRepository
             'user_id' => $userId
         ];
         $item = new Cart($data);
-        $saveResult = $item->save();
+        $item->save();
         $cartId = $item->id;
 
         return $cartId;
     }
 
     /**
-     * Add new item in Cart_item, or increment, if it exist.
+     * Add new item in CartItem, or increment, if it exist.
      *
      * @param  int $productId
      * @param  int $cartId
@@ -145,7 +145,7 @@ class CartRepository extends CoreRepository
      */
     public function addCartItemId($productId, $cartId)
     {
-        $result = Cart_item::where('product_id', $productId)->where('cart_id', $cartId)->first();
+        $result = CartItem::where('product_id', $productId)->where('cart_id', $cartId)->first();
         if ($result) {
             $newQuantity = $result->quantity + 1;
             $data = [
@@ -160,7 +160,7 @@ class CartRepository extends CoreRepository
                 'cart_id' => $cartId,
                 'quantity' => $newQuantity
             ];
-            $item = new Cart_item($data);
+            $item = new CartItem($data);
             $item->save();
         }
         return $newQuantity;
@@ -168,7 +168,7 @@ class CartRepository extends CoreRepository
 
 
     /**
-     * Decrement the quantity item from Cart_item, or delete item if the quantity is 0.
+     * Decrement the quantity item from CartItem, or delete item if the quantity is 0.
      *
      * @param  int $productId
      * @param  int $cartId
@@ -176,7 +176,7 @@ class CartRepository extends CoreRepository
      */
     public function decCartItemId($productId, $cartId)
     {
-        $cartItem = Cart_item::where('product_id', $productId)->where('cart_id', $cartId)->first();
+        $cartItem = CartItem::where('product_id', $productId)->where('cart_id', $cartId)->first();
         $newQuantity = 0;
         if (isset($cartItem)) {
             if ($cartItem->quantity > 1) {
@@ -187,7 +187,7 @@ class CartRepository extends CoreRepository
                 $cartItem->update($data);//writing in DB
 
             } else {
-                Cart_item::find($cartItem->id)->forceDelete();
+                CartItem::find($cartItem->id)->forceDelete();
             }
         }
         return $newQuantity;
@@ -200,7 +200,7 @@ class CartRepository extends CoreRepository
      */
     public function deleteCartItems($cartId)
     {
-        $cartItems = Cart_item::where('cart_id', $cartId)->forceDelete();
+        $cartItems = CartItem::where('cart_id', $cartId)->forceDelete();
 
         return $cartItems;
     }

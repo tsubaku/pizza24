@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\Cart_item;
+//use App\Models\CartItem;
 use App\Repositories\CartRepository;
 use App\Repositories\IndexRepository;
 use Illuminate\Http\Request;
@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Repositories\AjaxRepository;
 use App\Repositories\SettingRepository;
 use Cookie;
+
 //use Session;
 
 //use App\Models\Cart;
@@ -70,7 +71,7 @@ class AjaxController extends Controller
 
 
         $uri = substr(strrchr($_SERVER['HTTP_REFERER'], "/"), 1);//no use getRequestUri()! Its AJAX.
-        if ($uri == 'cart') {
+        if ($uri === 'cart') {
             #Get Cart_id for this Session_id
             $sessionId = $this->indexRepository->getSessionId($request);
             $cartId = $this->cartRepository->getCartId($sessionId);
@@ -90,28 +91,21 @@ class AjaxController extends Controller
             $deliveryCosts = $this->settingRepository->getDeliveryCosts($currentExchangeRate);
             $fullPrice = round(($total + $deliveryCosts), 2);
 
-            echo json_encode(array(
-                //'currency' => $currencyName,
+            echo json_encode([
                 'currencyLogo' => $currencyLogo,
-                //'paginator' => $paginator,
                 'pricesProductInCart' => $pricesProductInCart,
                 'deliveryCosts' => $deliveryCosts,
                 'fullPrice' => $fullPrice,
                 'sums' => $sums,
-                'total' => $total,
-                'deliveryCosts' => $deliveryCosts,
-                //'currentExchangeRate' => $currentExchangeRate,
-            ));
+                'total' => $total
+            ]);
         } else {
             $productPrices = $this->ajaxRepository->getProductPrices($currentExchangeRate);
 
-            echo json_encode(array(
-                //'currency' => $currencyName,
+            echo json_encode([
                 'currencyLogo' => $currencyLogo,
-                'productPrices' => $productPrices,
-                //'paginator' => $paginator,
-                //'currentExchangeRate' => $currentExchangeRate,
-            ));
+                'productPrices' => $productPrices
+            ]);
         }
 
 
@@ -135,7 +129,7 @@ class AjaxController extends Controller
             $cartId = $this->cartRepository->setCartId($sessionId);
         }
 
-        #Add product to the Cart_item table
+        #Add product to the CartItem table
         $productId = $request->productId;
         $action = $request->action;
         if ($action == 'decrement') {
@@ -166,7 +160,6 @@ class AjaxController extends Controller
             'productPriceSum' => $productPriceSum,
             'deliveryCosts' => $deliveryCosts,
             'fullPrice' => $fullPrice
-
         ));
     }
 

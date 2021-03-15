@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
-use Illuminate\Http\Request;
 
 use App\Http\Requests\SettingUpdateRequest;
 use App\Repositories\SettingRepository;
@@ -41,7 +40,7 @@ class SettingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Setting $setting
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(SettingUpdateRequest $request, $id)
@@ -55,7 +54,7 @@ class SettingController extends Controller
 
         $data = $request->all();
         $saveResult = $item->update($data);//writing in DB
-        $goTo = $this->settingRepository->redirectAfterSaveSetting($saveResult, $item);
+        $goTo = $this->settingRepository->redirectAfterSaveSetting($saveResult);
 
         return $goTo;
     }

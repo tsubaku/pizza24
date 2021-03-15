@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends BaseModel
 {
-    //use HasFactory;
     use SoftDeletes;
 
     /**
@@ -26,4 +23,28 @@ class Order extends BaseModel
         'phone',
         'address'
     ];
+
+
+    /**
+     * Converts a digital status code to a string.
+     * (Accessor)
+     *
+     * @return string
+     */
+    public function getStatusNameAttribute()
+    {
+        switch ($this->status) {
+            case 0:
+                $status = "In processing";
+                break;
+            case 1:
+                $status = "Delivered";
+                break;
+            default:
+                $status = "Unknown";
+                break;
+        }
+
+        return $status;
+    }
 }

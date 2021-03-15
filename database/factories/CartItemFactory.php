@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Order_item;
+use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class Order_itemFactory extends Factory
+class CartItemFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Order_item::class;
+    protected $model = CartItem::class;
 
     /**
      * Define the model's default state.
@@ -22,15 +22,13 @@ class Order_itemFactory extends Factory
     public function definition()
     {
         $product_id = $this->faker->numberBetween(1, 20);
-        $order_id = $this->faker->unique($reset = true)->numberBetween(1, 15);
+        $cart_id = $this->faker->unique($reset = true)->numberBetween(1, 15);
         $quantity = $this->faker->numberBetween(0, 3);
-        $price = $this->faker->randomFloat(null, 5, 20);
 
         return [
             'product_id' => $product_id,
-            'order_id' => $order_id,
-            'quantity' => $quantity,
-            'price' => $price
+            'cart_id' => $cart_id,
+            'quantity' => $quantity
         ];
     }
 }

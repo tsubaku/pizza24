@@ -20,16 +20,16 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th>user_id</th>
-                                    <th>created_at</th>
-                                    <th>status</th>
-                                    <th>total</th>
-                                    <th>currency</th>
-                                    <th>name</th>
-                                    <th>email</th>
-                                    <th>phone</th>
-                                    <th>address</th>
+                                    <th>Id</th>
+                                    <th>User id</th>
+                                    <th>Created at</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th>Currency</th>
+                                    <th>Name</th>
+                                    <th>E-mail</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,7 +39,7 @@
                                         <th>{{$item->id}}</th>
                                         <td>{{$item->user_id}}</td>
                                         <td>{{$item->created_at}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td>{{$item->statusName}}</td>
                                         <td>{{$item->total}}</td>
                                         <td>{{$item->currency}}</td>
                                         <td>{{$item->name}}</td>
@@ -56,7 +56,6 @@
                         @endif
                     @endisset
                 </div>
-
 
             </div>
         </div>

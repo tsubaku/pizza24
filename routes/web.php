@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CartController;
-use App\Http\Controllers\Admin\Cart_ItemController;
+use App\Http\Controllers\Admin\CartItemController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\SiteCartController;
 use App\Http\Controllers\OrderController;
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth', 'isadmin'], 'prefix' => 'admin'], functio
     Route::resource('carts', CartController::class)
         ->names('admin.carts');
 
-    Route::resource('cart_items', Cart_ItemController::class)
+    Route::resource('cart_items', CartItemController::class)
         ->names('admin.cart_items');
 
     $methods = ['index', 'update'];
@@ -58,7 +58,7 @@ Route::post('/changeProductQuantity', [AjaxController::class, 'changeProductQuan
 
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/welcome', function () {
 //    return view('welcome');
 //});

@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.25.0.
+ * Generated for Laravel 8.32.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -256,6 +256,20 @@
                         return $instance->resourcePath($path);
         }
                     /**
+         * Get the path to the views directory.
+         * 
+         * This method returns the first configured path in the array of view paths.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */ 
+        public static function viewPath($path = '')
+        {
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        return $instance->viewPath($path);
+        }
+                    /**
          * Get the path to the environment file directory.
          *
          * @return string 
@@ -325,7 +339,7 @@
                         return $instance->environment(...$environments);
         }
                     /**
-         * Determine if application is in local environment.
+         * Determine if the application is in the local environment.
          *
          * @return bool 
          * @static 
@@ -336,7 +350,7 @@
                         return $instance->isLocal();
         }
                     /**
-         * Determine if application is in production environment.
+         * Determine if the application is in the production environment.
          *
          * @return bool 
          * @static 
@@ -858,7 +872,7 @@
                         $instance->setFallbackLocale($fallbackLocale);
         }
                     /**
-         * Determine if application locale is the given locale.
+         * Determine if the application locale is the given locale.
          *
          * @param string $locale
          * @return bool 
@@ -2051,7 +2065,7 @@
                         return $instance->setRequest($request);
         }
                     /**
-         * Determine if current user is authenticated. If not, throw an exception.
+         * Determine if the current user is authenticated. If not, throw an exception.
          *
          * @return \App\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
@@ -5062,7 +5076,7 @@
          * Register an event listener with the dispatcher.
          *
          * @param \Closure|string|array $events
-         * @param \Closure|string|null $listener
+         * @param \Closure|string|array|null $listener
          * @return void 
          * @static 
          */ 
@@ -6341,6 +6355,7 @@
      * @method static \Illuminate\Http\Client\PendingRequest bodyFormat(string $format)
      * @method static \Illuminate\Http\Client\PendingRequest contentType(string $contentType)
      * @method static \Illuminate\Http\Client\PendingRequest retry(int $times, int $sleep = 0)
+     * @method static \Illuminate\Http\Client\PendingRequest sink($to)
      * @method static \Illuminate\Http\Client\PendingRequest stub(callable $callback)
      * @method static \Illuminate\Http\Client\PendingRequest timeout(int $seconds)
      * @method static \Illuminate\Http\Client\PendingRequest withBasicAuth(string $username, string $password)
@@ -6352,6 +6367,8 @@
      * @method static \Illuminate\Http\Client\PendingRequest withToken(string $token, string $type = 'Bearer')
      * @method static \Illuminate\Http\Client\PendingRequest withoutRedirecting()
      * @method static \Illuminate\Http\Client\PendingRequest withoutVerifying()
+     * @method static \Illuminate\Http\Client\PendingRequest dump()
+     * @method static \Illuminate\Http\Client\PendingRequest dd()
      * @method static \Illuminate\Http\Client\Response delete(string $url, array $data = [])
      * @method static \Illuminate\Http\Client\Response get(string $url, array $query = [])
      * @method static \Illuminate\Http\Client\Response head(string $url, array $query = [])
@@ -6450,7 +6467,7 @@
                         $instance->assertSent($callback);
         }
                     /**
-         * Assert that the given request were sent in the given order.
+         * Assert that the given request was sent in the given order.
          *
          * @param array $callbacks
          * @return void 
@@ -7347,7 +7364,7 @@
                     /**
          * Send a new message using a view.
          *
-         * @param string|array $view
+         * @param \Illuminate\Contracts\Mail\Mailable|string|array $view
          * @param array $data
          * @param \Closure|string|null $callback
          * @return void 
@@ -7663,7 +7680,7 @@
      * 
      *
      * @method static mixed reset(array $credentials, \Closure $callback)
-     * @method static string sendResetLink(array $credentials)
+     * @method static string sendResetLink(array $credentials, \Closure $callback = null)
      * @method static \Illuminate\Contracts\Auth\CanResetPassword getUser(array $credentials)
      * @method static string createToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
      * @method static void deleteToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
@@ -8148,7 +8165,7 @@
                     /**
          * Register a callback to be executed when creating job payloads.
          *
-         * @param callable $callback
+         * @param callable|null $callback
          * @return void 
          * @static 
          */ 
@@ -8578,7 +8595,7 @@
                         return $instance->routeIs(...$patterns);
         }
                     /**
-         * Determine if the current request URL and query string matches a pattern.
+         * Determine if the current request URL and query string match a pattern.
          *
          * @param mixed $patterns
          * @return bool 
@@ -8601,7 +8618,7 @@
                         return $instance->ajax();
         }
                     /**
-         * Determine if the request is the result of an PJAX call.
+         * Determine if the request is the result of a PJAX call.
          *
          * @return bool 
          * @static 
@@ -8612,7 +8629,7 @@
                         return $instance->pjax();
         }
                     /**
-         * Determine if the request is the result of an prefetch call.
+         * Determine if the request is the result of a prefetch call.
          *
          * @return bool 
          * @static 
@@ -9800,7 +9817,7 @@
                         return $instance->getAcceptableContentTypes();
         }
                     /**
-         * Returns true if the request is a XMLHttpRequest.
+         * Returns true if the request is an XMLHttpRequest.
          * 
          * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
@@ -11182,6 +11199,17 @@
         {
                         /** @var \Illuminate\Routing\Router $instance */
                         return $instance->pushMiddlewareToGroup($group, $middleware);
+        }
+                    /**
+         * Flush the router's middleware groups.
+         *
+         * @return \Illuminate\Routing\Router 
+         * @static 
+         */ 
+        public static function flushMiddlewareGroups()
+        {
+                        /** @var \Illuminate\Routing\Router $instance */
+                        return $instance->flushMiddlewareGroups();
         }
                     /**
          * Add a new route parameter binder.
@@ -14392,7 +14420,7 @@
                         return \Illuminate\View\Factory::parentPlaceholder($section);
         }
                     /**
-         * Check if section exists.
+         * Check if the section exists.
          *
          * @param string $name
          * @return bool 
@@ -16615,6 +16643,20 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->chunk($count, $callback);
+            }
+             
+                /**
+             * Run a map over each item while chunking.
+             *
+             * @param callable $callback
+             * @param int $count
+             * @return \Illuminate\Support\Collection 
+             * @static 
+             */ 
+            public static function chunkMap($callback, $count = 1000)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->chunkMap($callback, $count);
             }
              
                 /**

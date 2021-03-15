@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Setting as Model;
-use App\Models\Setting;
 
 
 class SettingRepository extends CoreRepository
@@ -33,10 +32,9 @@ class SettingRepository extends CoreRepository
      * Get referral address
      *
      * @param boolean $saveResult
-     * @param Setting $item
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirectAfterSaveSetting($saveResult, $item)
+    public function redirectAfterSaveSetting($saveResult)
     {
         if ($saveResult) {
             return redirect()->route('admin.settings.index')

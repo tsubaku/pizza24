@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Cart extends BaseModel
 {
-    //use HasFactory;
     use SoftDeletes;
 
     /**
@@ -43,10 +40,10 @@ class Cart extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function cart_item()
+    public function cartItem()
     {
-        //The cart_item belongs to the user
-        return $this->hasMany(Cart_item::class);
+        //The cartItem belongs to the user
+        return $this->hasMany(CartItem::class);
     }
 
 

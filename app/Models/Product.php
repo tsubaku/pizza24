@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  *
  * @property \App\Models\Category $category
- * @property \App\Models\Cart_item $cart_item
+ * @property \App\Models\CartItem $cartItem
  * @property string $title
  * @property string $slug
  * @property integer $category_id
@@ -23,7 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Product extends BaseModel
 {
-    //use HasFactory;
     use SoftDeletes;
 
     /**
@@ -56,9 +53,9 @@ class Product extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function cart_item()
+    public function cartItem()
     {
-        return $this->hasOne(Cart_item::class);
+        return $this->hasOne(CartItem::class);
     }
 
 

@@ -36,7 +36,7 @@
                             <tbody>
                             @foreach($paginator as $item)
                                 @php /** @var \App\Models\Cart $item */ @endphp
-                                <tr {{ $item->cart_item->count() ? '' : 'class=td-draft'}}>
+                                <tr {{ $item->cartItem->count() ? '' : 'class=td-draft'}}>
                                     <th>{{$item->id}}</th>
                                     <td>{{$item->user_id ? $item->user->name : '' }}</td>
                                     <td><a href="{{ route('admin.carts.show', $item) }}">{{$item->session_id}}</a></td>
@@ -45,7 +45,7 @@
                                     <td>{{$item->phone}}</td>
                                     <td>{{$item->address }}</td>
                                     <td>{{$item->created_at }}</td>
-                                    <td>{{$item->cart_item->count()}}</td>
+                                    <td>{{$item->cartItem->count()}}</td>
                                     <td>
                                         <form method="post" action="{{ route('admin.carts.destroy', $item->id) }}">
                                             @method('DELETE')

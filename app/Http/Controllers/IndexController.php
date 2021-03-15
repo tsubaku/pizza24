@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Cart;
 use Illuminate\Http\Request;
-
-use App\Repositories\ProductRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\IndexRepository;
-use App\Repositories\SettingRepository;
-use App\Repositories\AjaxRepository;
 use App\Repositories\CartRepository;
-
-//use Cookie;
 
 class IndexController extends Controller
 {

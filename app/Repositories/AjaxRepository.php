@@ -3,10 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Product;
-use App\Models\Cart;
-use App\Models\Cart_item;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class AjaxRepository extends CoreRepository
 {
@@ -36,8 +32,8 @@ class AjaxRepository extends CoreRepository
      * Get the Price product
      * Called when the Quantity is changed on the Cart page.
      *
-     * @param  int $perPage
-     * @param  int $selected
+     * @param  float $exchangeRate
+     * @param  int $productId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getProductPrice($exchangeRate, $productId)
@@ -56,8 +52,7 @@ class AjaxRepository extends CoreRepository
      * Get (and recalculate if necessary)  of the price of all products on the page.
      * Called when the currency is changed.
      *
-     * @param  int $perPage
-     * @param  int $selected
+     * @param  float $exchangeRate
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getProductPrices($exchangeRate)
@@ -68,8 +63,6 @@ class AjaxRepository extends CoreRepository
                 \DB::raw("ROUND((price / $exchangeRate),2) AS price"))
             ->where('is_published', 1)
             ->get();
-            //->simplePaginate(9)
-            //->items();
         return $results;
     }
 

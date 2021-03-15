@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request;
-
 use App\Repositories\ProductRepository;
 use App\Repositories\CategoryRepository;
 use App\Http\Requests\ProductUpdateRequest;
@@ -110,12 +108,13 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  ProductUpdateRequest $request
-     * @param  string $slug
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductUpdateRequest $request, $slug)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        $item = $this->productRepository->getEditSlug($slug);
+        //$item = $this->productRepository->getEditSlug($slug);
+        $item = $this->productRepository->getEdit($id);
         $title = $item->title;
         if (empty($item)) {
             return back()

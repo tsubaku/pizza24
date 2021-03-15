@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Order;
-use App\Models\Order_item;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -24,7 +23,7 @@ class OrderFactory extends Factory
     {
         $user_id = $this->faker->unique($reset = true)->numberBetween(3, 19);
         $status = $this->faker->numberBetween(0, 3);
-        $currency = (rand(1, 4) == 4) ? "USD" : "EUR";
+        $currency = (mt_rand(1, 4) === 4) ? "USD" : "EUR";
         $total = $this->faker->randomFloat(null, 5, 20);
         $name = $this->faker->name;
         $email = $this->faker->email;

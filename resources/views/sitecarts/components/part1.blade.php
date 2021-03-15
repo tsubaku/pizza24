@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 @foreach($paginator as $item)
-                    @php /** @var \App\Models\Cart_item $item */ @endphp
+                    @php /** @var \App\Models\CartItem $item */ @endphp
                     <tr id="tr{{$item->product_id}}">
                         <th>{{$item->id}}</th>
                         <td>
