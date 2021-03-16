@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Cart as Model;
-
 use App\Models\Cart;
 use App\Models\CartItem;
 use Auth;

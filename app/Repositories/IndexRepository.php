@@ -3,10 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product as Model;
-//use App\Models\Product;
-
 use Cookie;
-
 use Illuminate\Http\Request; //?
 
 
@@ -102,6 +99,7 @@ class IndexRepository extends CoreRepository
         $sessionId = session()->getId();
         Cookie::queue(self::NAME_COOKIE_SESSION, $sessionId, self::COOKIE_LIFE_TIME);
         Cookie::queue(self::NAME_COOKIE_CURRENCY, self::EUR_NAME_CURRENCY, self::COOKIE_LIFE_TIME);
+        Cookie::queue(self::NAME_COOKIE_LOCALE, self::DEFAULT_LOCALE, self::COOKIE_LIFE_TIME);
 
         return $sessionId;
     }
@@ -152,5 +150,20 @@ class IndexRepository extends CoreRepository
 
         return $exchangeRate;
     }
+
+
+    /**
+     * Set user locale
+     *
+     * @param $rawLocale
+     * @return bool
+     */
+    public function setLocale($locale)
+    {
+        Cookie::queue(self::NAME_COOKIE_LOCALE, $locale, self::COOKIE_LIFE_TIME);
+
+        return true;
+    }
+
 
 }

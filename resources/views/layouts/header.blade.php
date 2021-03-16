@@ -20,12 +20,12 @@
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item px-3 ">
-                        <select id="selectCurrency" class="custom-select ">
+                        <select id="selectCurrency" class="custom-select">
                             <option class="currencySet"
-                                    value="EUR" {{Cookie::get('currency')=='EUR' ? 'selected=selected' : '' }}>EUR
+                                    value="EUR" {{Cookie::get('currency')==='EUR' ? 'selected=selected' : '' }}>EUR
                             </option>
                             <option class="currencySet"
-                                    value="USD" {{Cookie::get('currency')=='USD' ? 'selected=selected' : '' }}>USD
+                                    value="USD" {{Cookie::get('currency')==='USD' ? 'selected=selected' : '' }}>USD
                             </option>
                         </select>
                     </li>
@@ -44,24 +44,24 @@
                     @endisset
 
                     <li class="nav-item px-1">
-                        <a class="nav-link" href="{{ route('cart.index') }}">My Cart</a>
+                        <a class="nav-link" href="{{ route('cart.index') }}">@lang('text.my_cart')</a>
                     </li>
 
                     <li class="nav-item px-1">
-                        <a class="nav-link" href="{{ route('order.index') }}">My Orders</a>
+                        <a class="nav-link" href="{{ route('order.index') }}">@lang('text.my_order')</a>
                     </li>
 
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">@lang('text.login')</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">@lang('text.register')</a>
                             </li>
                         @endif
                     @else
@@ -84,6 +84,29 @@
                             </div>
                         </li>
                     @endguest
+                    {{--
+                    <li class="nav-item px-3 ">
+
+                        <select id="selectLanguage" class="custom-select">
+                            <option class="languageSet"
+                                    value="en" {{App::isLocale('en') ? 'selected=selected' : '' }}>Eng
+                            </option>
+                            <option class="languageSet"
+                                    value="ru" {{App::isLocale('ru') ? 'selected=selected' : '' }}>Ru
+                            </option>
+                        </select>
+                    </li>
+                    --}}
+
+                    <li class="nav-item">
+                        <a class="nav-link {{App::isLocale('en') ? 'page-link' : '' }}"
+                           href="{{ route('locale', ['locale' => 'en']) }}">EN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{App::isLocale('ru') ? 'page-link' : '' }}"
+                           href="{{ route('locale', ['locale' => 'ru']) }}">RU</a>
+                    </li>
+
                 </ul>
             </div>
         </div>

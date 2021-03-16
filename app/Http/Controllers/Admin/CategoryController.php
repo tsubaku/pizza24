@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ProductRepository;
 //use Illuminate\Http\Request;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Requests\CategoryCreateRequest;
 
-use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller

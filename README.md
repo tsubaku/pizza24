@@ -66,7 +66,7 @@ on Heroku)
 
 ___
 
-## Deployment 
+### Deployment 
 
 1. After installation on the server, you need to link storage: __php artisan storage:link__
 2. Need to be manually copied to __\\storage\app\public\\__:
@@ -79,7 +79,9 @@ ___
 #### Html tag naming.
 Html tags such as id and class are styled in __kebab-case__, except when used in java script. In this case, the tags are named in __camelCase__. 
 
-
+#### Features 
+* There are categories and subcategories.
+* Added localization and Russian language.
 
 
 

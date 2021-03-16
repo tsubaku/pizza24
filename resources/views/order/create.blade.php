@@ -7,14 +7,14 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    <h1>Confirmation</h1>
+                    <h1>@lang('text.сonfirmation')</h1>
                 </div>
 
-                <p>name: {{$dataOrder['name']}} </p>
-                <p>email: {{$dataOrder['email']}}</p>
-                <p>phone: {{$dataOrder['phone']}}</p>
-                <p>address: {{$dataOrder['address']}}</p>
-                <p>total: {{$dataOrder['total']}} {{$dataOrder['currencyLogo']}}</p>
+                <p>@lang('text.name'): {{$dataOrder['name']}} </p>
+                <p>@lang('text.email'): {{$dataOrder['email']}}</p>
+                <p>@lang('text.phone'): {{$dataOrder['phone']}}</p>
+                <p>@lang('text.address'): {{$dataOrder['address']}}</p>
+                <p>@lang('text.full_price'): {{$dataOrder['total']}} {{$dataOrder['currencyLogo']}}</p>
 
                 <p>user_id: {{$dataOrder['user_id']}}
                     <small>(for debugging)</small>
@@ -52,11 +52,11 @@
                     </div>
                     <div class="col-3">
                         <button type="button" id="buttonBack"
-                                class="btn btn-block btn-primary buttonPartControl">Back
+                                class="btn btn-block btn-primary buttonPartControl">@lang('text.back')
                         </button>
                     </div>
                     <div class="col-3">
-                        <button type="submit" class="btn btn-block btn-primary">Buy</button>
+                        <button type="submit" class="btn btn-block btn-primary">@lang('text.buy')</button>
                     </div>
                 </div>
 

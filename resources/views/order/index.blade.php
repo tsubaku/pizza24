@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h1>My orders</h1>
+                            <h1>@lang('text.my_orders')</h1>
                         </div>
                     </div>
 
@@ -20,16 +20,16 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>User id</th>
-                                    <th>Created at</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
-                                    <th>Currency</th>
-                                    <th>Name</th>
-                                    <th>E-mail</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>@lang('text.id')</th>
+                                    <th>@lang('text.user_id')</th>
+                                    <th>@lang('text.сreated_at')</th>
+                                    <th>@lang('text.status')</th>
+                                    <th>@lang('text.full_price')</th>
+                                    <th>@lang('text.currency')</th>
+                                    <th>@lang('text.name')</th>
+                                    <th>@lang('text.email')</th>
+                                    <th>@lang('text.phone')</th>
+                                    <th>@lang('text.address')</th>
                                 </tr>
                                 </thead>
                                 <tbody>

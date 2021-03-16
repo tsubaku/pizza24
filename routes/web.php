@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CartItemController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\SiteCartController;
 use App\Http\Controllers\OrderController;
@@ -22,7 +23,7 @@ use App\Http\Controllers\OrderController;
 */
 
 #Index page
-Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 #Cart page
 Route::resource('cart', SiteCartController::class)->names('cart');
@@ -31,6 +32,9 @@ Route::resource('cart', SiteCartController::class)->names('cart');
 Route::resource('order', OrderController::class)->names('order');
 
 Auth::routes();
+
+#Change locale
+Route::get('locale/{locale}', [IndexController::class, 'changeLocale'])->name('locale');
 
 #Admin Panel
 Route::group(['middleware' => ['auth', 'isadmin'], 'prefix' => 'admin'], function () {
@@ -58,6 +62,10 @@ Route::post('/changeProductQuantity', [AjaxController::class, 'changeProductQuan
 
 
 
+
+
+
+//Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/welcome', function () {
 //    return view('welcome');

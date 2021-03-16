@@ -7,6 +7,36 @@ $.ajaxSetup({
     }
 });
 
+
+/**
+ * Changes the user locale
+ */
+$('.languageSet').click(function (e) {
+    console.log('Click button change locale');
+    e.preventDefault();
+
+    var select = document.getElementById("selectLanguage");
+    var newLocale = select.value;
+    console.log('Change locale: ' + newLocale);
+
+    $.ajax({
+        type: 'POST',
+        url: "/changeLocale",
+        data: {
+            newLocale: newLocale
+        },
+        success: function (result) {
+            var data = JSON.parse(result);
+            console.log('result=' + result);
+        },
+        error: function (result) {
+            console.log('Ajax error!');
+            console.log(result);
+        }
+    });
+});
+
+
 /**
  * Request to the server to recalculate the prices of all products on the page.
  * Called when the currency is changed.
@@ -177,7 +207,7 @@ $('.buttonPartControl').click(function (e) {
     console.log('buttonPartControl');
 
     //if user is on the Order page, go to the Cart page
-    if (window.location.pathname  != '/cart') {
+    if (window.location.pathname != '/cart') {
         window.location.pathname = '/cart';
     }
 

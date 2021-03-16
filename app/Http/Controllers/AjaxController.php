@@ -2,23 +2,13 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\CartItem;
 use App\Repositories\CartRepository;
 use App\Repositories\IndexRepository;
 use Illuminate\Http\Request;
 
 use App\Repositories\AjaxRepository;
 use App\Repositories\SettingRepository;
-use Cookie;
 
-//use Session;
-
-//use App\Models\Cart;
-//use Illuminate\Validation\Rules\In;
-//use function PHPUnit\Framework\isEmpty;
-
-
-//use function PHPUnit\Framework\isNull;
 
 class AjaxController extends Controller
 {
@@ -64,7 +54,7 @@ class AjaxController extends Controller
     {
         #Get price parameters
         $currencyName = $request->currency; //From request only!
-        Cookie::queue('currency', $currencyName, 2628000);
+        $this->ajaxRepository->setCurrency($currencyName);
 
         $currencyLogo = $this->indexRepository->getCurrencyLogo($currencyName);
         $currentExchangeRate = $this->indexRepository->getCurrentExchangeRate($currencyName);
@@ -107,8 +97,6 @@ class AjaxController extends Controller
                 'productPrices' => $productPrices
             ]);
         }
-
-
     }
 
 
@@ -132,10 +120,10 @@ class AjaxController extends Controller
         #Add product to the CartItem table
         $productId = $request->productId;
         $action = $request->action;
-        if ($action == 'decrement') {
+        if ($action === 'decrement') {
             $newQuantity = $this->cartRepository->decCartItemId($productId, $cartId);
         }
-        if ($action == 'increment') {
+        if ($action === 'increment') {
             $newQuantity = $this->cartRepository->addCartItemId($productId, $cartId);
         }
 
@@ -162,6 +150,8 @@ class AjaxController extends Controller
             'fullPrice' => $fullPrice
         ));
     }
+
+
 
 }
 

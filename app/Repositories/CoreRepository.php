@@ -24,6 +24,9 @@ abstract class CoreRepository
     const USD_LOGO_CURRENCY = '$ ';
     const EUR_LOGO_CURRENCY = '€ ';
 
+    const NAME_COOKIE_LOCALE = 'locale';
+    const DEFAULT_LOCALE = 'en';
+
     /**
      * @var Model
      */

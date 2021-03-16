@@ -60,4 +60,22 @@ class IndexController extends Controller
 
         return view('index', compact('paginator', 'categoryList', 'currencyName', 'currencyLogo', 'sessionId', 'cartId', 'selectedCategory'));
     }
+
+
+    /**
+     * Changes the user locale
+     *
+     * @param string $rawLocale
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeLocale($rawLocale)
+    {
+        if ($rawLocale) {
+            if (in_array($rawLocale, \Config::get('app.locales'), false)) {
+                $this->indexRepository->setLocale($rawLocale);
+            }
+        }
+
+        return redirect()->back();
+    }
 }

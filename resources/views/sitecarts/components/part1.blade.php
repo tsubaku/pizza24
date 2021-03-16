@@ -2,27 +2,27 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title">
-                <h1>Products in your cart</h1>
+                <h1>@lang('text.products_in')</h1>
             </div>
         </div>
         @if($paginator->items())
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>Image</th>
+                    <th>@lang('text.id')</th>
+                    <th>@lang('text.image')</th>
                     <th>product_id
                         <small>(for debugging)</small>
                     </th>
-                    <th>Product name</th>
-                    <th>Price</th>
+                    <th>@lang('text.product_name')</th>
+                    <th>@lang('text.price')</th>
                     <th>cart_id
                         <small>(for debugging)</small>
                     </th>
-                    <th>Quantity</th>
-                    <th>Summ</th>
-                    <th>Add</th>
-                    <th>Reduce</th>
+                    <th>@lang('text.quantity')</th>
+                    <th>@lang('text.summ')</th>
+                    <th>@lang('text.add')</th>
+                    <th>@lang('text.reduce')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,14 +76,14 @@
         </thead>
         <tbody>
         <tr>
-            <th>Delivery costs:</th>
+            <th>@lang('text.delivery_costs')</th>
             <td>
                 <div id="deliveryCosts" class="d-inline">{{$deliveryCosts}}</div>
                 <small class="text-muted d-inline divCurrencyName">{{$currencyLogo}}</small>
             </td>
         </tr>
         <tr>
-            <th>Full price:</th>
+            <th>@lang('text.full_price')</th>
             <td>
                 <div>
                     <div id="divFullPrice" class="d-inline">{{$fullPrice}}</div>
@@ -97,13 +97,13 @@
         <div class="col-6"></div>
         <div class="col-3">
             <button type="button" id="buttonNext"
-                    class="btn btn-block btn-primary buttonPartControl {{$paginator->items() ? '' : 'disabled' }} ">Next
+                    class="btn btn-block btn-primary buttonPartControl {{$paginator->items() ? '' : 'disabled' }} ">@lang('text.next')
             </button>
         </div>
     </div>
 
     @else
-        <p>The cart is empty!</p>
+        <p>@lang('text.empty')</p>
     @endif
 
 </div>

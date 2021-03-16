@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Cookie;
 
 class AjaxRepository extends CoreRepository
 {
@@ -67,6 +68,18 @@ class AjaxRepository extends CoreRepository
     }
 
 
+    /**
+     * Set user currency
+     *
+     * @param $rawLocale
+     * @return bool
+     */
+    public function setCurrency($currencyName)
+    {
+        Cookie::queue(self::NAME_COOKIE_CURRENCY, $currencyName, self::COOKIE_LIFE_TIME);
+
+        return true;
+    }
 
 
 

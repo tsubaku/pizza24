@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title">
-                <h1>Contact information</h1>
+                <h1>@lang('text.contact_information')</h1>
             </div>
 
             @if($paginator->items())
@@ -13,25 +13,25 @@
                     @method('PATCH')
                     @csrf
                     <fieldset class="">
-                        <label for="name" class="">Name
+                        <label for="name" class="">@lang('text.name')
                             <input name="name" id="name" type="text" required="required" class="form-control"
                                    value="{{ old('name', $cart->name) }}">
                         </label>
                     </fieldset>
                     <fieldset class="">
-                        <label for="email" class="">Email
+                        <label for="email" class="">@lang('text.email')
                             <input name="email" id="email" type="text" required="required" class="form-control"
                                    value="{{ old('email', $cart->email) }}">
                         </label>
                     </fieldset>
                     <fieldset class="">
-                        <label for="phone" class="">Phone
+                        <label for="phone" class="">@lang('text.phone')
                             <input name="phone" id="phone" type="text" required="required" class="form-control"
                                    value="{{ old('phone', $cart->phone) }}">
                         </label>
                     </fieldset>
                     <fieldset class="">
-                        <label for="address" class="">Address
+                        <label for="address" class="">@lang('text.address')
                             <input name="address" id="address" type="text" required="required" class="form-control"
                                    value="{{ old('address', $cart->address) }}">
                         </label>
@@ -42,12 +42,12 @@
                         </div>
                         <div class="col-3">
                             <button type="button" id="buttonBack"
-                                    class="btn btn-block btn-primary buttonPartControl">Back
+                                    class="btn btn-block btn-primary buttonPartControl">@lang('text.back')
                             </button>
                         </div>
                         <div class="col-3">
                             <button type="submit" id="buttonSubmit"
-                                    class="btn btn-block btn-primary">Next
+                                    class="btn btn-block btn-primary">@lang('text.next')
                             </button>
                         </div>
                     </div>
