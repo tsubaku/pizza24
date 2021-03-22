@@ -124,7 +124,7 @@ class IndexRepository extends CoreRepository
      */
     public function getCurrencyLogo($currencyName)
     {
-        if ($currencyName == self::USD_NAME_CURRENCY) {
+        if ($currencyName === self::USD_NAME_CURRENCY) {
             $currencyLogo = self::USD_LOGO_CURRENCY;
         } else {
             $currencyLogo = self::EUR_LOGO_CURRENCY;
@@ -142,7 +142,7 @@ class IndexRepository extends CoreRepository
      */
     public function getCurrentExchangeRate($currencyName)
     {
-        if ($currencyName == self::USD_NAME_CURRENCY) {
+        if ($currencyName === self::USD_NAME_CURRENCY) {
             $exchangeRate = $this->getExchangeRate();
         } else {
             $exchangeRate = 1;

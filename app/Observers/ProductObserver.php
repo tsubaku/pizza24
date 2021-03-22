@@ -4,15 +4,18 @@ namespace App\Observers;
 
 use App\Models\Product;
 
+//use App\Traits\UniqueModelSlug;
+
 class ProductObserver
 {
+    //use UniqueModelSlug;
 
     /**
      * @param Product $product
      */
     public function creating(Product $product)
     {
-        $this->setSlug($product);
+        //$this->setSlug($product);
     }
 
     /**
@@ -31,7 +34,7 @@ class ProductObserver
      */
     public function updating(Product $product)
     {
-        $this->setSlug($product);
+        //$this->setSlug($product);
     }
 
 
@@ -86,8 +89,12 @@ class ProductObserver
      */
     protected function setSlug(Product $product)
     {
+        /*
         if (empty($product->slug)) {
             $product->slug = \Str::slug($product->title);
         }
+*/
+
+
     }
 }

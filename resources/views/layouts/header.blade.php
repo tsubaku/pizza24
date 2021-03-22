@@ -84,19 +84,6 @@
                             </div>
                         </li>
                     @endguest
-                    {{--
-                    <li class="nav-item px-3 ">
-
-                        <select id="selectLanguage" class="custom-select">
-                            <option class="languageSet"
-                                    value="en" {{App::isLocale('en') ? 'selected=selected' : '' }}>Eng
-                            </option>
-                            <option class="languageSet"
-                                    value="ru" {{App::isLocale('ru') ? 'selected=selected' : '' }}>Ru
-                            </option>
-                        </select>
-                    </li>
-                    --}}
 
                     <li class="nav-item">
                         <a class="nav-link {{App::isLocale('en') ? 'page-link' : '' }}"
