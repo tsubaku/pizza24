@@ -31,7 +31,10 @@ $('.languageSet').click(function (e) {
         },
         error: function (result) {
             console.log('Ajax error!');
-            console.log(result);
+            console.log('result='+result);
+
+            str = JSON.stringify(result, null, 4); // beautiful indented output.
+            console.log(str);
         }
     });
 });
@@ -41,7 +44,7 @@ $('.languageSet').click(function (e) {
  * Request to the server to recalculate the prices of all products on the page.
  * Called when the currency is changed.
  */
-$('.currencySet').click(function (e) {
+$('#selectCurrency').change(function (e) {
     e.preventDefault();
 
     var select = document.getElementById("selectCurrency");
@@ -105,7 +108,10 @@ $('.currencySet').click(function (e) {
         },
         error: function (result) {
             console.log('Ajax error!');
-            console.log(result);
+            console.log('result='+result);
+
+            str = JSON.stringify(result, null, 4); // beautiful indented output.
+            console.log(str);
         }
     });
 });
@@ -114,7 +120,7 @@ $('.currencySet').click(function (e) {
 /**
  * Change the category in the Index page header
  */
-$('.categorySet').click(function (e) {
+$('#selectCategory').change(function (e) {
     e.preventDefault();
     var selectedCategory = document.getElementById("selectCategory").value;
     //console.log('Change category: ' + selectedCategory);
@@ -126,7 +132,6 @@ $('.categorySet').click(function (e) {
  * Increment/Decrement current quantity.
  */
 $('.buttonDecProduct, .buttonAddProduct').click(function (e) {
-    console.log('Click button Decrement Product');
     e.preventDefault();
 
     nameProductId = $(this).attr('id');
@@ -135,8 +140,11 @@ $('.buttonDecProduct, .buttonAddProduct').click(function (e) {
 
     if (nameProductId.includes('idAddButton')) {
         action = 'increment';
+        console.log('Click button Increment Product');
+
     } else {
         action = 'decrement';
+        console.log('Click button Decrement Product');
     }
 
     $.ajax({
@@ -153,7 +161,10 @@ $('.buttonDecProduct, .buttonAddProduct').click(function (e) {
         },
         error: function (result) {
             console.log('Ajax error!');
-            console.log(result);
+            console.log('result='+result);
+
+            str = JSON.stringify(result, null, 4); // beautiful indented output.
+            console.log(str);
         }
     });
 });
@@ -191,7 +202,7 @@ function setNewPricesOnPage(data) {
         var divFullPrice = document.getElementById('divFullPrice');
         divFullPrice.textContent = data.fullPrice; //productPriceSum text (on the Cart page)
 
-        if (data.fullPrice == data.deliveryCosts) {
+        if (data.fullPrice === data.deliveryCosts) {
             var buttonSubmit = document.getElementById('buttonSubmit');
             buttonSubmit.classList.add('disabled'); //Set "Disable" for the Submit button (on the Cart page)
         }

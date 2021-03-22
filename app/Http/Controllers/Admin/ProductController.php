@@ -11,8 +11,12 @@ use App\Http\Requests\ProductCreateRequest;
 
 use Illuminate\Support\Facades\Storage;
 
+//use App\Traits\UniqueModelSlug;
+
 class ProductController extends Controller
 {
+    //use UniqueModelSlug;
+
     /**
      * @var ProductRepository
      */
@@ -67,6 +71,13 @@ class ProductController extends Controller
 
         //$item = (new Product())->create($data);
         $item = new Product($data);
+
+        $item->slug = $this->generateSlug(
+            Product::class, // указываем модель строкой, т.к. добавляем новую строку
+            $item->title
+        ); // 1-blog
+
+
         $saveResult = $item->save();
 
         $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
@@ -95,7 +106,6 @@ class ProductController extends Controller
     {
      //   $item = $this->productRepository->getEdit($id);
         $item = $this->productRepository->getEditSlug($slug);
-  //      dd($item);
         if (empty($item)) {
             abort(404);
         }
@@ -115,18 +125,21 @@ class ProductController extends Controller
     {
         //$item = $this->productRepository->getEditSlug($slug);
         $item = $this->productRepository->getEdit($id);
-        $title = $item->title;
         if (empty($item)) {
             return back()
-                ->withErrors(['msg' => "Product `$title` not found"])
+                ->withErrors(['msg' => "Product $id not found"])
                 ->withInput();
         }
 
-        $data = $this->productRepository->processRequest($request);
+        $data = $this->productRepository->processRequestUpdate($request, $item);
+
+
+
+
         $saveResult = $item->update($data);             //writing in DB
         //$saveResult = $item->fill($data)->save();     //analog
 
-        //dd($id, $saveResult, $data, $item, $request);
+     //   dd($item->slug, $id, $saveResult, $data, $item, $request);
         $goTo = $this->productRepository->redirectAfterSaveProduct($saveResult, $item);
 
         return $goTo;

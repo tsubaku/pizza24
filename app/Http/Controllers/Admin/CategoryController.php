@@ -127,11 +127,9 @@ class CategoryController extends Controller
     {
         //$item = $this->categoryRepository->getEditSlug($slug);
         $item = $this->categoryRepository->getEdit($id);
-        $title = $item->title;
-
         if (empty($item)) {
             return back()
-                ->withErrors(['msg' => "Category `$title` not found"])
+                ->withErrors(['msg' => "Category id=$id not found"])
                 ->withInput();
         }
 

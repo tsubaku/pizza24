@@ -122,7 +122,7 @@ class CartRepository extends CoreRepository
         if (Auth::check()) {
             $userId = auth()->user()->id;
         } else {
-            $userId = 0;
+            $userId = null;
         }
         $data = [
             'session_id' => $sessionId,

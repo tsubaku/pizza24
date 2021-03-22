@@ -24,12 +24,12 @@ class ProductCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:3|max:200|unique:products,title,' . $this->product,
-            'slug' => 'required|min:3|max:200|unique:products,slug,' . $this->product,
+            'title' => 'required|min:3|max:200|unique:products,title,',
+            'slug' => 'unique:products,slug,',
             'category_id' =>'required|integer|exists:categories,id',
             'description' =>'string|min:3|max:1000',
             'price' =>'required|numeric|between:0.01,999.99',
-            'image_url' =>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' =>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_published' =>'required|boolean',
         ];
     }

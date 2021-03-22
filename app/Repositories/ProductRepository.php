@@ -3,17 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Product as Model;
-
-//use Illuminate\Database\Eloquent\Collection;
-//use Illuminate\Pagination\LengthAwarePaginator;
-//use PhpParser\Node\Expr\AssignOp\Concat;
-
-//use App\Http\Requests\ProductUpdateRequest;
-//use App\Http\Requests\ProductCreateRequest;
 use App\Models\Product;
+
+use App\Traits\UniqueModelSlug;
 
 class ProductRepository extends CoreRepository
 {
+    use UniqueModelSlug;
+
     /**
      * Implementation of an abstract method from CoreRepository
      * @return string
@@ -45,8 +42,6 @@ class ProductRepository extends CoreRepository
     {
         return $this->startConditions()->where('slug', $slug)->first();
     }
-
-
 
 
     /**
@@ -95,7 +90,6 @@ class ProductRepository extends CoreRepository
     }
 
 
-
     /**
      * Get all products in a specified category
      *
@@ -129,6 +123,41 @@ class ProductRepository extends CoreRepository
         }
 
         return $subItemNames;
+    }
+
+
+    /**
+     * Returns the request data. If a picture was passed in the request, it saves it to the store.
+     *
+     * @param $request
+     * @return array
+     */
+    public function processRequestUpdate($request, $item)
+    {
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $newFileName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs(
+                'public', $newFileName
+            );
+            $data['image_url'] = $newFileName;
+        }
+
+
+      //  dd($request->slug);
+        //dd($item->getKeyName(), '!=', $item->getKey());
+      //  dd($item->where($item->getKeyName(), '!=', $item->getKey()));
+    //    if ($data['slug'] === null) {
+   //         $data['slug'] ='1';
+   //     }
+        $data['slug'] = $this->generateSlug(
+            $item, // указываем модель экземпляром, т.к. обновляем существующую строку
+            //$data['slug']
+            $request->slug
+        ); // 1-blog
+
+        return $data;
     }
 
 }
